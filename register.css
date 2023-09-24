@@ -1,0 +1,395 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    color: var(--txt-color);
+}
+:root{
+    /* --lig-color:; */
+    --txt-color:#252B48;
+    --cnt-color: #E4F1FF;
+}
+.loader-container--hidden{
+    opacity: 0;
+    visibility: hidden;
+}
+.loader-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url(Login-img/register-bg.jpg) no-repeat;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    transition: .4s;
+}
+.waiting-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.waiting-card{
+    width: 50%;
+    margin: 0 35px;
+    opacity: 0;
+    overflow: hidden;
+    animation: turnup 1s ease forwards;
+}
+.waiting-img img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+@keyframes turnup {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.waiting-img .waiting-card:first-child {
+    animation-delay: 1s;
+}
+
+.waiting-img .waiting-card:nth-child(2) {
+    animation-delay: 1.5s;
+}
+
+.waiting-img .waiting-card:last-child {
+    animation-delay: 2s;
+}
+.loader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.loader .loading{
+    color: black;
+    letter-spacing: 15px;
+    font-size: 6rem;
+    font-weight: 600;
+    text-shadow: 5px 5px 9px;
+}
+.loader span{
+    animation: load 1s ease 2 forwards;
+    opacity: 0;
+}
+@keyframes load {
+    from {
+    opacity: 0;
+    }
+    to {
+    opacity: 1;
+    }
+}
+.loading span:first-child {
+    animation-delay: .35s;
+}
+.loading span:nth-child(2) {
+    animation-delay: .75s;
+}
+.loading span:last-child {
+    animation-delay: 1s;
+}
+
+
+
+.container {
+    max-width: 80%;
+    width: fit-content;
+    padding: .8rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: var(--cnt-color);
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+    transform: scale(.9);
+}
+body{
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(Login-img/register-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*===========================================================================
+============================================================================
+                                                                                HEADER
+============================================================================
+============================================================================*/
+.backLogin{
+    position: absolute;
+    top: 1%;
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    color: gray;
+    opacity: 0.5;
+    transition: .3s;
+}
+.backLogin i{
+    margin-right: 5px;
+    transition: .3s;
+}
+.backLogin:hover{
+    opacity: 1;
+}
+.backLogin:hover i{
+    transform: translateX(-5px) scale(1.1);
+}
+.title{
+    width: fit-content;
+    margin: 0 auto;
+    position: relative;
+    letter-spacing: 3px;
+    font-weight: 700;
+    font-size: 2rem;
+}
+.title::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5%;
+    transform: translateX(50%);
+    width: 50%;
+    height: 2px;
+    background-color: #96B6C5;
+}
+/*===========================================================================
+============================================================================
+                                                                            INPUT-FORM
+============================================================================
+============================================================================
+*/
+#registerForm{
+    padding: .5rem;
+}
+#registerForm i{
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+.user-detail{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+.user-input-field{
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 5px;
+    font-weight: 400;
+    display: flex;
+    width: 100%;
+
+}
+.user-input-field{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.user-input-field label {
+    flex-basis: 40%;
+    text-transform: capitalize;
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+.user-input-field input{
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    flex-basis: 50%;
+    padding: 10px;
+    max-width: 450px;
+    width: 400px;
+    border-radius: 5px;
+    border-color: transparent;
+    outline: none;
+    transition: .3s;
+}
+
+.user-input-field input:focus {
+    border-color: #068FFF;
+    outline: none; 
+}
+.user-detail .user-input-field:first-child i{
+    color: #539165;
+}
+
+
+.Gender{
+    margin:10px 0 10px 0 ;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.Gender p{
+    text-transform: capitalize;
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+.Gender label{
+    font-size: 1.05rem;
+    font-weight: 400;
+}
+
+.btns{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-basis: 50px;
+}
+.btns button{
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    border: 1px groove #539165;
+    background-color: transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: 0.4s transform, 
+                0.4s letter-spacing,
+                0.4s background-color,
+                0.4s box-shadow,
+                0.1s border,
+                0.1s font-size,
+                0.1s color;
+}
+.btns button:hover{
+    transform: scale(1.1);
+    letter-spacing: 1.5px;
+    background: #98D8AA;
+    box-shadow: 0 0 35px #98D8AA ;
+    border: 2px solid #539165;
+    font-size: 1.03rem;
+    color: #61677A;
+}
+/*===========================================================================
+============================================================================
+                                                                            ADVERTISE
+============================================================================
+============================================================================*/
+.advertise{
+    display: grid;
+    width: 480px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas: 
+    'logo logo'
+    'ad1 ad2'
+    ;
+    place-items: center;
+}
+.item{
+    width: 75%;
+    overflow: hidden;   
+    padding: 5px;
+    backdrop-filter: blur(15px);
+}
+.item1{
+    grid-area: logo;
+}
+.item2{
+    grid-area: ad1;
+    width: 100%;
+}
+.item3{
+    grid-area: ad2 ;
+    width: 100%;
+}
+.item img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+/*===========================================================================
+============================================================================
+                                                                            RESPONSIVE
+============================================================================
+============================================================================*/
+@media screen and (max-width: 1000px){
+    body{
+        flex-direction: column-reverse;
+    }
+    .advertise{
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+        grid-template-areas: 
+        'logo ad1 ad2';
+        height: fit-content;
+    }
+
+    .item1{
+        grid-area: logo;
+        width: 100%;
+    }
+    .item2{
+        grid-area: ad1;
+        width: 100%;
+    }
+    .item3{
+        grid-area: ad2 ;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 600px){
+    .backLogin{
+        top: 97%;
+    }
+    .container{
+        width: 100%;
+        height: 100%;
+    }
+    .item{
+        max-width: 80%;
+    }
+    .user-input-field{
+        flex-direction: column;
+        gap: 5px;
+    }
+    .user-input-field > label{
+        font-size: .9rem;
+        font-weight: bold;
+    }
+    .user-input-field input{
+        width: max(80%, 200px);
+        font-size: .85rem;
+    }
+    .Gender{
+        justify-content: center;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+@media screen and (max-width: 470px){
+    .container{
+        max-width: 100%;
+        width: 100%;
+    }
+    .item{
+        display: none;
+    }
+}

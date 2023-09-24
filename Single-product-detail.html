@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="single-product-detail.css">
+    <link rel="shortcut icon" href="single-product-img/food-web favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Chi tiết sản phẩm</title>
+</head>
+<body>
+    <h1 class="start-title">Chi tiết sản phẩm</h1>
+    <div class = "card-wrapper">
+        <div class = "card">
+            <div class="return-menu">
+                <a href="produces-page.html"><i class="fa-solid fa-arrow-left"></i>Quay về</a>
+            </div>
+            <div class = "product-imgs">
+                <div class = "img-display">
+                    <div class = "img-showcase">
+                            <img src = "single-product-img/pr4.jpg" alt = "smoothy">
+                            <img src = "single-product-img/pr1.jpg" alt = "smoothy">
+                            <img src = "single-product-img/pr2.jpg" alt = "smoothy">
+                            <img src = "single-product-img/pr3.jpg" alt = "smoothy">
+                        </div>
+                </div>
+                    <div class = "img-select">
+                        <div class = "img-item">
+                            <a href = "#" data-id = "1" onclick="">
+                                <img src = "single-product-img/pr4.jpg" alt = "smoothy" class="active" onclick=" changeActive(this)">
+                            </a>
+                        </div>
+                        <div class = "img-item">
+                            <a href = "#" data-id = "2">
+                                <img src = "single-product-img/pr1.jpg" alt = "smoothy"
+                                onclick=" changeActive(this)">
+                            </a>
+                        </div>
+                        <div class = "img-item">
+                            <a href = "#" data-id = "3">
+                                <img src = "single-product-img/pr2.jpg" alt = "smoothy"
+                                onclick=" changeActive(this)">
+                            </a>
+                        </div>
+                        <div class = "img-item">
+                            <a href = "#" data-id = "4">
+                                <img src = "single-product-img/pr3.jpg" alt = "smoothy"
+                                onclick=" changeActive(this)">
+                            </a>
+                        </div>
+                    </div>
+            </div>
+            <div class = "product-content">
+                <h2 class = "product-title">Sinh tố trái cây</h2>
+                <div class = "product-detail">
+                    <h2>Mô tả sản phẩm: </h2>
+                    <p>Sinh tố trái cây là một thức uống tươi ngon và bổ dưỡng được làm từ sự kết hợp của các loại trái cây tươi. Nó là một cách tuyệt vời để tận hưởng hương vị đặc trưng và lợi ích dinh dưỡng của trái cây.</p>
+                    <p>Với hương vị tươi mát và màu sắc sặc sỡ, sinh tố trái cây là một lựa chọn tuyệt vời cho bữa ăn sáng, bữa phụ giữa ngày hoặc là một thức uống khoáng đãng trong những ngày nóng. Nó không chỉ là một món uống ngon mà còn là một cách tuyệt vời để bổ sung trái cây vào chế độ ăn hàng ngày và thưởng thức hương vị tươi ngon của thiên nhiên.</p>
+                    <ul>
+                        <li>Vị: <span>Bông cải, dâu, vị quất, dưa hấu</span></li>
+                        <li>Còn: <span>100 ly</span></li>
+                        <li>Phân loại:<span>Thức uống</span></li>
+                        <li>Khu vực giao hàng:  <span> Q6, Q7, Q8, Q9, Q10</span></li>
+                        <li>Phí giao hàng: <span>Free</span></li>
+                    </ul>
+                </div>
+                <div class="line"></div>
+                <div class = "product-rating">
+                    <p>đánh giá: </p>
+                    <div class="star">
+                        <i class = "fas fa-star"></i>
+                        <i class = "fas fa-star"></i>
+                        <i class = "fas fa-star"></i>
+                        <i class = "fas fa-star"></i>
+                        <i class = "fas fa-star-half-alt"></i>
+                        <span>4.0(58)</span>
+                    </div>
+                </div>
+                <div class="buy">
+                    <div class = "product-price">
+                        <p class = "last-price">giá cũ: <span>28.000 VNĐ</span></p>
+                        <p class = "new-price">giá mới: <span>22.000 VNĐ</span></p>
+                    </div>
+                    <div class = "purchase-info">
+                        <div class="amount">
+                            <label for="quantities">Số lượng</label>
+                            <input type = "number" min = "0" value = "1" id="quantities">
+                        </div>
+                        <div class="buy-btn">
+                            <button type = "button" class = "btn">
+                                Thêm vào giỏ hàng <i class = "fas fa-shopping-cart"></i>
+                                </button>
+                                <button type = "button" class = "btn"><i class="fa-solid fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class = "social-links">
+                <p>Share: </p>
+                <div class="social-box">
+                    <span><i class="fa-brands fa-facebook " ></i></span>
+                    <span><i class="fa-brands fa-youtube " ></i></span>
+                    <span><i class="fa-brands fa-twitter " ></i></span>
+                    <span><i class="fa-brands fa-instagram "></i></span>
+                    <span><i class="fa-brands fa-tiktok "></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1 class="relate-title">sản phẩm liên quan</h1>
+    <section class="relate-products-section">
+        <div class="relate-products-container">
+                <div class="card">
+                    <div class="like"><i class="fa-solid fa-heart" title="Yêu thích"></i></div>
+                    <div class="fpic-container">
+                        <img src="products-img/b1.png" class="card-img-top" alt="products-img/rice1.png">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Cơm Gà</h3>
+                        <div class="rate">
+                            <p>Đánh Giá:</p>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-regular fa-star-half-stroke"></i>
+                        </div>
+                        <div class="price">
+                            <p>Giá:<p> <strong>150.000 VNĐ</strong>
+                        </div>
+                        <div class="card-link">
+                            <a href="Single-product-detail.html" class="btn">Tìm hiểu thêm<i class="fa-solid fa-circle-question"></i></a>
+                            <a href="#" class="btn">Thêm vào giỏ hàng<i class="fa-solid fa-cart-shopping"></i></a> 
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="like"><i class="fa-solid fa-heart" title="Yêu thích"></i></div>
+                    <div class="fpic-container">
+                        <img src="products-img/b1.png" class="card-img-top" alt="products-img/rice1.png">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Cơm Gà</h3>
+                        <div class="rate">
+                            <p>Đánh Giá:</p>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-regular fa-star-half-stroke"></i>
+                        </div>
+                        <div class="price">
+                            <p>Giá:<p> <strong>150.000 VNĐ</strong>
+                        </div>
+                        <div class="card-link">
+                            <a href="Single-product-detail.html" class="btn">Tìm hiểu thêm<i class="fa-solid fa-circle-question"></i></a>
+                            <a href="#" class="btn">Thêm vào giỏ hàng<i class="fa-solid fa-cart-shopping"></i></a> 
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="like"><i class="fa-solid fa-heart" title="Yêu thích"></i></div>
+                    <div class="fpic-container">
+                        <img src="products-img/b1.png" class="card-img-top" alt="products-img/rice1.png">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Cơm Gà</h3>
+                        <div class="rate">
+                            <p>Đánh Giá:</p>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-regular fa-star-half-stroke"></i>
+                        </div>
+                        <div class="price">
+                            <p>Giá:<p> <strong>150.000 VNĐ</strong>
+                        </div>
+                        <div class="card-link">
+                            <a href="Single-product-detail.html" class="btn">Tìm hiểu thêm<i class="fa-solid fa-circle-question"></i></a>
+                            <a href="#" class="btn">Thêm vào giỏ hàng<i class="fa-solid fa-cart-shopping"></i></a> 
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="like"><i class="fa-solid fa-heart" title="Yêu thích"></i></div>
+                    <div class="fpic-container">
+                        <img src="products-img/b1.png" class="card-img-top" alt="products-img/rice1.png">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Cơm Gà</h3>
+                        <div class="rate">
+                            <p>Đánh Giá:</p>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-solid  fa-star"></i>
+                            <i class="fa-regular fa-star-half-stroke"></i>
+                        </div>
+                        <div class="price">
+                            <p>Giá:<p> <strong>150.000 VNĐ</strong>
+                        </div>
+                        <div class="card-link">
+                            <a href="Single-product-detail.html" class="btn">Tìm hiểu thêm<i class="fa-solid fa-circle-question"></i></a>
+                            <a href="#" class="btn">Thêm vào giỏ hàng<i class="fa-solid fa-cart-shopping"></i></a> 
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </section>
+    <script src="single-product-detail.js"></script>
+</body>
+</html>

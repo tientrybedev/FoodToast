@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+:root{
+    --txt-color: #252B48;
+    --btn-color: #FF4646;
+    --ef-color: #9DB2BF;
+    --star-icon: #FFC93C;
+    --bg-color:#FFDBC3;
+    --bor-color: #35A29F;
+    --card-color: #E1E5EA;
+    --heart-color:#FF3FA4;
+    --show-color: #ADC4CE;
+    --card-border-radius: .5rem;
+}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    color: var(--txt-color);
+}
+body{
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.cart-container{
+    margin-top: 1rem;
+    width: 80%;
+    height: fit-content;
+    background-color:  rgba(245, 245, 245, 0.7);
+    padding: 20px;
+    border-radius: var(--card-border-radius);
+}
+.header{
+    width: fit-content;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+.cart-box{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.cart{
+    flex-basis: 60%;
+}
+.payment{
+    height: 450px;
+    flex-basis: 40%;
+    padding: 10px;
+    background-color: aquamarine;
+    border-radius: 5px;
+}
+.total{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    border: 2px solid black;
+}
+.pay-btn{
+    width: 80%;
+    font-size: 1.2rem;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: var(--btn-color);
+}
+.relate-title{
+    width: fit-content;
+    border-radius: var(--card-border-radius);
+    padding: 3px 8px;
+    font-size: 2.5rem;
+    background-color: #EADBC8;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 500;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+.relate-products-section{
+padding: 20px;
+}
+.relate-products-container{
+margin: 0 auto;
+margin-top: 2rem;
+width: 88%;
+padding: 5px;
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 1rem;
+}
+.relate-products-container .card{
+position: relative;
+overflow: hidden;
+padding: .8rem;
+width: auto;        
+height: fit-content;
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
+justify-content: space-between;
+background-color: var(--card-color);
+border-radius: var(--card-border-radius);
+border: 2px solid transparent;
+transition: .4s;
+}
+.relate-products-container .card:hover{
+border: 2px solid black;
+transform: scale(1.03);
+}
+.like{
+position: absolute;
+font-size: 1.2rem;
+top: 5px;
+right: -1.3rem;
+transition: .3s;
+}
+.like i{
+transition: .3s ;
+}
+.relate-products-container .card:hover .like{
+right: .5rem    ;
+}
+.like:hover i{
+transform: scale(1.2);
+color: var(--heart-color);
+}
+.fpic-container {
+margin-top: 1.1rem;
+width: clamp(100%, 210px);
+border-radius: var(--card-border-radius);
+overflow: hidden;
+}
+.card-img-top{
+width: 100%;
+height: 100%;
+object-fit:  cover;
+transition: .4s;
+}
+.card .card-body{
+flex-basis: 50%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+}
+.card-title{
+font-size: 28px;
+letter-spacing: 2px;
+}
+.card-body .rate,
+.card-body .price {
+font-size: 1.1rem;
+display: flex;
+align-items: center;
+}
+.card-body .rate p{
+margin-right: 25px;
+}
+.card-body .rate i{
+color: var(--star-icon);
+}
+.card-body .price p{
+margin-left: 35px;
+}
+.card-body .price strong{
+font-size: 1.2rem;
+letter-spacing: 1px;
+color: #D61355;
+}
+.card-body .card-link{
+margin-top: 1rem;
+margin-bottom: 1.1rem;
+display: flex;
+gap: 10px;
+}
+
+.card-body .card-link .btn{
+display: flex;
+align-items: center;
+text-align: center;
+position: relative;
+padding: .5rem;
+font-size: 1.1rem;
+border-radius: 5px;
+opacity: 0.7;
+background-color: var(--show-color);
+transition: .4s;
+}
+.relate-products-container .card:hover .btn{
+opacity: 1;
+}
+.card-body .card-link .btn i{
+margin-left: 5px;
+transition: .4s;
+}
+.card-body .card-link .btn:hover{
+color: white;
+}
+.card-body .card-link .btn:hover i {
+color: white;
+transform: translateX(2.5px);
+}

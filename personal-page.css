@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+:root{
+    /* --lig-color:; */
+    --bg-color:#FFDBC3;
+    --txt-color:#252B48;
+    --cnt-color: #E4F1FF;
+    --card-color: #91C8E4;
+    --btn-color: #D0BFFF;
+}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    color: var(--txt-color);
+    text-decoration: none;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-color);
+}
+.return1{
+    display: none;
+    position: absolute;
+    font-size: 1.2rem;
+    top: 2%;
+    left: 2.5%;
+    opacity: .5;
+    transition: .4s;
+}
+.return{
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    opacity: .5;
+    transition: .4s;
+}
+.return1 i,.return i{
+    transition: .4s;
+}
+.return:hover i{
+    transform: rotate(-20deg)
+}
+.return:hover, .return1:hover {
+    opacity: 1;
+}
+.information{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 2rem;
+    border-radius: 10px;
+    height: 600px;
+    width: 950px;
+    background-color: var(--cnt-color);
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+}
+.card{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 450px;
+    background-color: var(--card-color);
+    border-radius: 5px;
+    padding: 35px;
+}
+.card .img-container{
+    transform: translateY(-15px);
+    overflow: hidden;
+    width: 100%
+}
+.img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+.img-container figcaption{
+    text-align: center;
+}
+.main{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    height: 400px;
+}
+.title{
+    position: relative;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.title::after{
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    transform: translateX(55%);
+    width: 50%;
+    min-height: 3.5px;
+    background-color: #61677A;
+    border-radius: 5px;
+}
+.box-detail{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 70%;
+    width: 90%;
+}
+.user-detail {
+    width: 100%;
+}
+.user-detail p{
+    font-size: 1.1rem;
+}
+.user-detail b{
+    margin-left: 50px;
+}
+
+.btn{
+    padding: 15px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: .4s;
+    background-color: var(--btn-color);
+}
+.btn i{
+    transition: .3s;
+}
+.main .btn i{
+    margin-left: 5px;
+}
+.btn:hover{
+    background-color: #FFA559;
+    color: white;
+}
+.main .btn:hover{
+    letter-spacing: 1px;
+}
+.btn:hover i{
+    color: white;
+}
+.line{
+    margin-top: 10px;
+    min-height: .5%;
+    width: 95%;
+    border-radius: 10px;
+    background-color: #61677A;
+}
+.function{
+    margin-top: 5px;
+    width: 110%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.history,
+.cart{
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+.history h3,
+.cart h3{
+    opacity: .5;
+    transition: .4s;
+}
+.history:hover h3,
+.cart:hover h3{
+    opacity: 1;
+    letter-spacing: 1px;
+}
+@media screen and (max-width:715px){
+    body h1{
+        font-size: 1.2rem;
+    }
+
+    .information{
+        flex-direction: column;
+        height: fit-content;
+    }
+    .user-detail {
+        width: fit-content;
+    }
+    .return{
+        display: none;
+    }
+    .return1{
+        display: block;
+    }
+    .return1:hover i{
+        transform: translateX(-5px);
+    }
+    .card{
+        margin-top: 10px;
+    }
+    .main .btn{
+        margin-bottom: 1rem;
+    }
+    .btn{
+        padding: 8px;
+    }
+}
+@media screen and (max-width: 350px){
+    .card{
+        height: fit-content;
+    }
+    .box-detail{
+        height: 50%;
+    }
+    .line{
+        display: none;
+    }
+    .function{
+        flex-direction: column;
+        gap: 4px;
+    }
+    .history,
+    .cart{
+    font-size: .8rem;
+}
+}
