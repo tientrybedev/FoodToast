@@ -1,3 +1,42 @@
+window.addEventListener("load", () => {
+    document.body.classList.add("disable-scroll");
+    setTimeout(() => {
+        const loaderContainer = document.querySelector(".loader-container");
+        loaderContainer.classList.add("loader-container--hidden");
+
+        setTimeout(() => {
+            // Remove the class that disables scrolling
+            document.body.classList.remove("disable-scroll");
+            loaderContainer.remove();
+        }, 200);
+    }, 4200);
+});
+document.addEventListener('DOMContentLoaded', function () {
+    var lgOut = document.getElementById("lg-out-message");
+    var confirmButton = document.getElementById("confirmLogout");
+    var cancelButton = document.getElementById("cancelLogout");
+    var lgOutBtn = document.querySelector(".log-out-btn");
+
+    if(lgOutBtn){
+    function openMes() {
+        lgOut.style.display = "block";
+        document.body.classList.add("message-open"); 
+    }
+    function closeMes() {
+        lgOut.style.display = "none";
+        document.body.classList.remove("message-open"); 
+    }
+
+    lgOutBtn.addEventListener("click", openMes);
+    cancelButton.addEventListener("click", closeMes);
+    confirmButton.addEventListener("click", function() {
+        window.location.href = "log_out.php";
+    });
+}
+});
+
+
+
 //==========================================================================================
 //==========================================================================================
 //===============================================sticky-navbar
@@ -41,6 +80,31 @@ window.addEventListener("scroll", function() {
 
     prevScrollPos = currentScrollPos;
 });
+window.addEventListener("scroll", function() {
+    const sidebar = document.querySelector(".sidebar-container");
+    const start = document.querySelector(".top-content");
+    const end = document.querySelector("#footer");
+
+    // Calculate the position of section 1 and section 6 relative to the viewport
+    const rectS = start.getBoundingClientRect();
+    const rectE = end.getBoundingClientRect();
+
+    // If section 1 is above the viewport and section 6 is below the viewport, show the sidebar
+    if (rectS.bottom < 0 && rectE.top > window.innerHeight) {
+        sidebar.style.opacity = "1"; // Set opacity to 1 to make it visible
+        sidebar.style.pointerEvents = "auto"; // Enable pointer events
+    } else {
+        sidebar.style.opacity = "0"; // Set opacity to 0 to hide it
+        sidebar.style.pointerEvents = "none"; // Disable pointer events
+    }
+});
+const bar =document.querySelector('.bar');
+const hiddenMenu = document.querySelector('.hidden-bar')
+bar.onclick = function(){
+    bar.classList.toggle('openbar')
+    hiddenMenu.classList.toggle('bar-active')
+}
+
 
 
  // ==========================================================================
@@ -120,3 +184,193 @@ document.addEventListener("mouseup", dragStop);
 carousel.addEventListener("scroll", infiniteScroll);
 wrapper.addEventListener("mouseenter", () => clearTimeout(timeoutId));
 wrapper.addEventListener("mouseleave", autoPlay);
+
+//tìm kiếm live trên search-bar
+var http;
+function object() {
+    if (window.XMLHttpRequest) {
+        // code cho IE7+, Firefox, Chrome, Opera, Safari
+        http = new XMLHttpRequest();
+    } else {
+        // code cho IE6, IE5
+        http = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    return http;
+}
+function liveSearch(query) {
+    const searchResults = document.getElementById("searchResults");
+
+    if (query.trim() !== "") {
+        const http = object(); 
+        http.onreadystatechange = process;
+        http.open('GET', 'search_products.php?query=' + encodeURIComponent(query), true);
+        http.send();
+        // hiệu ứng UI/UX
+        searchResults.style.display = "block";
+        setTimeout(function () {
+            searchResults.style.opacity = "1";
+            searchResults.style.transform = "translateY(0)";
+            searchResults.style.visibility = "visible";
+        }, 130);
+    }else{
+        searchResults.style.opacity = "0";
+        searchResults.style.transform = "translateY(-12px)";
+        searchResults.style.visibility = "hidden"; 
+        setTimeout(function () {
+            searchResults.style.display = "none";
+        }, 350);
+    }
+}
+
+function process() {
+    if (http.readyState === 4 && http.status === 200) {
+        const result = http.responseText;
+        document.getElementById("searchResults").innerHTML = result;
+    }
+}
+//Hiệu ứng kéo xuống cho kết quả tìm kiếm
+function handleScroll() {
+    const currentScrollY = window.scrollY;
+    const searchResults = document.getElementById("searchResults");
+    if (searchResults) {
+        if (currentScrollY > lastScrollY) {
+            searchResults.style.transform ="translateY(-18px)"
+            setTimeout(function () {
+                searchResults.style.opacity ="0"
+                searchResults.style.visibility = "hidden";
+            }, 140);
+
+        } else {
+            setTimeout(function () {
+                searchResults.style.transform ="translateY(0)"
+                searchResults.style.opacity ="1"
+                searchResults.style.visibility = "visible";
+            }, 180);
+        }
+    }
+    // Update the lastScrollY variable
+    lastScrollY = currentScrollY;
+}
+let lastScrollY = 0;
+if (document.getElementById("searchResults")) {
+    window.addEventListener("scroll", handleScroll);
+}
+
+
+
+//đếm sl sản phẩm và hiển thị
+$(document).ready(function() {
+    function updateCartBadge() {
+        $.ajax({
+            type: "GET",
+            url: "cart_count.php",
+            dataType: "json", 
+            success: function(response) {
+                var cartCount = response.count;
+                $("#cartBadge").text(response.count);
+                if (cartCount === 0) {
+                    $("#cartBadge").hide();
+                } else {
+                    $("#cartBadge").show();
+                }
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.error("Error fetching cart count:", textStatus, errorThrown);
+            }
+        });
+    }    
+    //thêm sản phẩm vào giỏ hàng
+        function updateCartBadge() {
+        $.ajax({
+            type: "GET",
+            url: "cart_count.php",
+            dataType: "json", 
+            success: function(response) {
+                var cartCount = response.count;
+                $("#cartBadge").text(response.count);
+                if (cartCount === 0) {
+                    $("#cartBadge").hide();
+                } else {
+                    $("#cartBadge").show();
+                }
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.error("Error fetching cart count:", textStatus, errorThrown);
+            }
+        });
+    }    
+    function addToCart(productId) {
+        $.ajax({
+            type: "POST",
+            url: "add_to_cart_process.php",
+            data: { product_id: productId },
+            success: function(response) {
+                updateCartBadge();
+                var showToast = $("#toastMessage");
+                showToast.show();
+                if (response.status === "success") {
+                    showToast.text(response.message); 
+                    showToast.addClass("success-toast"); 
+                }else{
+                    showToast.text(response.message); 
+                    showToast.addClass("error-toast"); 
+                }
+                setTimeout(function() {
+                    showToast.hide();
+                    showToast.removeClass("success-toast error-toast"); // Remove styling 
+                }, 3500);
+            }
+        });
+    }
+    $(".into-cart-btn").on("click", function() {
+        const productId = $(this).data("product-id");
+        addToCart(productId);
+    });
+    updateCartBadge();
+});
+
+
+$(document).ready(function () {
+    var brandsContainer = $(".brands-container");
+    var secondRow = $(".brands-container.second-row");
+    var showSecondRowButton = $("#showSecondRowButton");
+    var viewAllLink = $("#viewAllLink");
+
+    // Initially, hide the second row and the "View All" link.
+    secondRow.hide();
+    viewAllLink.hide();
+
+    // Check if there are more than 4 brand images to show the "Show More" button.
+    if (brandsContainer.children().length > 4) {
+        showSecondRowButton.show();
+    }
+
+    // Toggle the visibility of the second row when clicking the "Show More" button.
+    showSecondRowButton.click(function () {
+        secondRow.slideToggle();
+        showSecondRowButton.text(function (i, text) {
+            return text === "Xem Thêm" ? "Ẩn bớt" : "Xem Thêm";
+        });
+    });
+});
+
+function showLoginAnnouncement(event) {
+    if(event){
+        event.preventDefault();
+        var showToast = $('#toastMessage');
+        showToast.show();
+        showToast.addClass('announce');
+        showToast.text("Bạn Chưa Đăng Nhập");
+        setTimeout(function() {
+            showToast.hide();
+        }, 4000);
+    }else{
+        var showToast = $('#toastMessage');
+        showToast.show();
+        showToast.addClass('announce');
+        showToast.text("Bạn Chưa Đăng Nhập");
+        setTimeout(function() {
+            showToast.hide();
+        }, 4000);
+    }
+}

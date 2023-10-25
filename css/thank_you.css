@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+:root{
+    --txt-color: #252B48;
+    --ef-color: #9DB2BF;
+    --container-bor: #FFB000;
+    --cart-color: #279EFF;
+    --bg-color:#FFDBC3;
+    --btn-hover-color: #D2E0FB;
+    --btn-bor-color: #787A91;
+    --title-header-color:#CBFFA9;
+    --section-color: #FAF0D7;
+    --title-shadow:rgba(203, 255, 169, 0.8) 0px 7px 29px 0px;
+    --hue: 223;
+	--bg: hsl(var(--hue),90%,20%);
+	--fg: hsl(var(--hue),10%,90%);
+	--primary: hsl(var(--hue),90%,55%);
+	--primary-dn: hsl(var(--hue),90%,45%);
+}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    color: var(--txt-color);
+}
+body{
+    min-height: 100vh;
+    background-color: var(--bg-color);
+}
+.thank-you-title{
+    position: absolute;
+    opacity: 0; 
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 2px solid var(--btn-bor-color);
+    background-color: var(--title-header-color);
+    box-shadow: var(--title-shadow);
+    transition: opacity .3s ease;
+}
+.show-title {
+    opacity: 1; /* Make it visible */
+}
+.check-spinner__worm-a,
+.check-spinner__worm-b {
+	visibility: hidden;
+}
+.check-spinner {
+	margin-bottom: 3em;
+	overflow: visible;
+	width: 6.25em;
+	height: 6.25em;
+}
+.check-spinner__worm-a {
+	animation: worm-a 1.2s linear;
+}
+.check-spinner__worm-b {
+	animation: worm-b 1.2s 1.2s linear forwards;
+	stroke-dashoffset: 0.01;
+}
+.check-spinner__circle {
+	animation: circle 0.2s 2.3s cubic-bezier(0,0,.42,1.33) forwards;
+}
+
+/* Animations */
+@keyframes worm-a {
+	from {
+		stroke-dashoffset: 36.1;
+		visibility: visible;
+	}
+	to {
+		stroke-dashoffset: -252.9;
+		visibility: visible;
+	}
+}
+@keyframes worm-b {
+	from {
+		animation-timing-function: linear;
+		stroke-dasharray: 0 0 72.2 341.3;
+		visibility: visible;
+	}
+	69.7% {
+		animation-timing-function: ease-out;
+		stroke-dasharray: 0 207 45 341.3;
+		visibility: visible;
+	}
+	to {
+		animation-timing-function: ease-out;
+		stroke-dasharray: 0 297 45 341.3;
+		visibility: visible;
+	}
+}
+@keyframes circle {
+	from { r: 0; }
+	to { r: 50px; }
+}
+@keyframes reappear {
+	from { visibility: hidden; }
+	to { visibility: visible; }
+}
+.thank-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: auto;
+    padding: 15px 0px 25px 0px;
+    background-color: var(--section-color);
+    border-radius: 15px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--section-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    z-index: 5;
+}  
+.check-spinner {
+    margin-bottom: 3em;
+    overflow: visible;
+    width: 6.25em;
+    height: 6.25em;
+}   
+.check-spinner__worm-a {
+    animation: worm-a 1.2s linear;
+}
+
+.check-spinner__worm-b {
+    animation: worm-b 1.2s 1.2s linear forwards;
+    stroke-dashoffset: 0.01;
+}
+
+.check-spinner__circle {
+    animation: circle 0.2s 2.3s cubic-bezier(0, 0, .42, 1.33) forwards;
+}
+
+  /* Keyframes and animations for the spinner */
+  @keyframes worm-a {
+    from {
+        stroke-dashoffset: 36.1;
+        visibility: visible;
+    }
+    to {
+        stroke-dashoffset: -252.9;
+        visibility: visible;
+    }
+  }
+  
+  @keyframes worm-b {
+    from {
+      animation-timing-function: linear;
+      stroke-dasharray: 0 0 72.2 341.3;
+      visibility: visible;
+    }
+    69.7% {
+      animation-timing-function: ease-out;
+      stroke-dasharray: 0 207 45 341.3;
+      visibility: visible;
+    }
+    to {
+     animation-timing-function: ease-out;
+    stroke-dasharray: 0 297 45 341.3;
+    visibility: visible;
+    }
+}
+  
+  @keyframes circle {
+    from {
+    r: 0;
+    }
+    to {
+    r: 50px;
+}
+}
+  
+
+
+.thank-content{
+    display: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    opacity: 0; /* Initially hidden */
+    pointer-events: none; /* Initially not clickable */
+    transition: opacity 0.3s ease; /* Add a smooth transition effect */
+}
+.ex-word{
+    font-size: 1.3rem;
+    text-transform: capitalize;
+    text-align: center;
+}
+.text p{
+    font-size: 1.2rem;
+}
+
+
+.link-back{
+    margin-top: 1.5rem;
+    width: 80%;
+    text-align: center;
+}
+.back-to-cart{
+    padding: 10px;
+    font-size: 1.5rem;
+    opacity: .75;
+    border-radius: 10px;
+    background-color: var(--ef-color);
+    border: 2px solid var(--btn-bor-color);
+    transition: .3s;
+}
+.back-to-cart i{
+    transition: .3s;
+}
+.back-to-cart:hover{
+    opacity: 1;
+    background-color: var(--btn-hover-color);
+    border-color: black;
+}
+.back-to-cart:hover i{
+    color: var(--cart-color);
+    transform: translateX(4px);
+}
