@@ -8,12 +8,18 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $user_id = $_SESSION['user_id'];
     $query = "SELECT product_id FROM favorite_products WHERE user_id = $user_id";
     $result = mysqli_query($conn, $query);
+    $totalRecords = mysqli_num_rows($result);
+    $recordsPerPage = 12;
+    $totalPages = ceil($totalRecords / $recordsPerPage);
+    $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
+    $offset = ($currentPage - 1) * $recordsPerPage;
+    $sql = "SELECT product_id FROM favorite_products WHERE user_id = $user_id LIMIT $recordsPerPage OFFSET $offset";
+    $result = mysqli_query($conn, $sql);
     $relateResPro = '';
     while ($row = mysqli_fetch_assoc($result)) {
         $product_id = $row['product_id'];
         $product_query = "SELECT name, price, image_1 FROM products WHERE product_id = '$product_id'";
         $product_result = mysqli_query($conn, $product_query);
-
         if ($product_row = mysqli_fetch_assoc($product_result)) {
             $related_product_name = $product_row['name'];
             $related_product_price = $product_row['price'];
@@ -71,12 +77,65 @@ if (empty($relateResPro)) {
             <a href="produces-page.php"><i class="fa-solid fa-clipboard-list"></i> Menus</a>
         </div>
         <h1 class="favor_title">Yêu thích</h1>
-    <div class="relate-products-container">
-        <?php
-        echo  $relateResPro;
-        ?>
-    </div>
+        <main>
+            <div class="relate-products-container">
+                <?php
+                    echo  $relateResPro;
+                ?>
+            </div>
+            <?php
+            echo '<div class="pagination">';
+                if ($currentPage > 1) {
+                    echo '<a href="?page=' . ($currentPage - 1) . '" class="prevBtn"><i class="fa-solid fa-angle-left"></i></a>';
+                    }
+                for ($i = 1; $i <= $totalPages; $i++) {
+                    echo '<a href="?page=' . $i . '"';
+                        if ($i == $currentPage) {
+                            echo ' class="active-page"';
+                            }
+                            echo '>' . $i . '</a>';
+                }
+                if ($currentPage < $totalPages) {
+                    echo '<a href="?page=' . ($currentPage + 1) . '" class="nextBtn"><i class="fa-solid fa-angle-right"></i></a>';
+                    }
+                echo '</div>';
+            ?>
+    </main>
+    <footer>
+        <div class="footer-container" id="footer">
+            <div class="left box">
+                <h2>Thông tin</h2>
+                <p><strong>FoodToast</strong> cung cấp cho bạn trải nghiệm mua sắm đồ ăn trực tuyến thú vị. Đừng chần chừ, truy cập FoodToast để tiết kiệm thời gian và chi phí ngay nào.</p>
+            </div>
+            <div class="middle box">
+                <h2>Liên lạc</h2>
+                    <ul>
+                        <li><a href="#"><i class="fa-solid fa-phone fa-lg" style="color: #1d62d7;"></i>0935.68.68.68.</a> </li>
+                        <li><a href="#"><i class="fa-solid fa-envelope fa-lg" style="color: #d0c335;"></i>Tien@gmail.com.</a></li>
+                        <li><a href="#"><i class="fa-solid fa-location-dot fa-lg" style="color: #ff3300;"></i>Quận 10, Tp.Hồ Chí Minh.</a></li>    
+                    </ul>    
+            </div>
+            <div class="right box">
+                <h2>Dịch vụ</h2>
+                    <ul>
+                        <li><i class="fa-solid fa-truck-fast fa-lg" style="color: #208bee;"></i>Giao hàng</li>
+                        <li><i class="fa-regular fa-circle-check fa-lg" style="color: #2d9f3a;"></i> Giá tốt nhất</li>
+                        <li><i class="fa-solid fa-comments fa-lg" style="color: #2f64c1;"></i> Hỗ trợ 24/7</li>
+                        <li><i class="fa-solid fa-money-check-dollar fa-lg" style="color: #0e9a04;"></i> Thanh toán điện tử </li>
+                    </ul> 
+            </div>       
+        </div>
 
+        <hr style="margin: 0 auto; width: 50%; border: 1px groove gray;">
+        <div class="social-box">
+            <h2>Theo dõi ngay</h2>
+            <span><i class="fa-brands fa-facebook " ></i></span>
+            <span><i class="fa-brands fa-youtube " ></i></span>
+            <span><i class="fa-brands fa-twitter " ></i></span>
+            <span><i class="fa-brands fa-instagram "></i></span>
+            <span><i class="fa-brands fa-tiktok "></i></span>
+        </div>
+    </footer> 
     <script src="js/favor.js"></script>
     <script>
 document.addEventListener('DOMContentLoaded', function () {

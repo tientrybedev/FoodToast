@@ -199,45 +199,6 @@ function showLoginAnnouncement(event) {
 }
 }
 
-// $(document).ready(function () {
-//     $(".addToFavor, .like").on("click", function () {
-//         const userId = $(this).data("user-id"); 
-//         const isLoggedIn = document.querySelector(".not-logged-in");
-//         const productId = $(this).data("product-id"); 
-//         const likeButton = $(this);
-//         if(!isLoggedIn){
-//         $.ajax({
-//             type: "POST",
-//             url: "add_to_favorites.php",
-//             data: { user_id: userId, product_id: productId },
-//             dataType: "json",
-//             success: function (response) {
-//                 if (response.status === "success") {
-//                     var showToast = $("#cartAnnounce");
-//                     showToast.show();
-//                     showToast.text(response.message); 
-//                     showToast.addClass("success-announce"); 
-//                     likeButton.find("i").css({
-//                         pointerEvents: 'none',
-//                         color: 'var(--heart-color)',
-//                         transform: 'scale(1.2)'
-//                     });
-//                 }
-//                 setTimeout(function() {
-//                     showToast.hide();
-//                     showToast.removeClass("success-toast");
-//                 }, 3500);
-//             },
-//             error: function (xhr, textStatus, errorThrown) {
-//                 console.error("Error: " + textStatus, errorThrown);
-//                 alert("Lỗi."); 
-//             }
-//         });
-//     } else{
-//         showLoginAnnouncement();
-//     }
-//     });
-// });
 
 
 $(document).ready(function () {
@@ -246,9 +207,6 @@ $(document).ready(function () {
         const isLoggedIn = document.querySelector(".not-logged-in");
         const productId = $(this).data("product-id");
         const likeButton = $(this);
-
-        console.log("Clicked element:", this); // Check if the correct element is being clicked
-
         if (!isLoggedIn) {
             $.ajax({
                 type: "POST",
@@ -256,16 +214,12 @@ $(document).ready(function () {
                 data: { user_id: userId, product_id: productId },
                 dataType: "json",
                 success: function (response) {
-                    console.log("Ajax response:", response); // Check the response from the server
-
+                    console.log("Ajax response:", response); 
                     if (response.status === "success") {
                         var showToast = $("#cartAnnounce");
                         showToast.show();
                         showToast.text(response.message);
-                        showToast.addClass("success-announce");
-
-                        console.log("Like button:", likeButton); // Check the 'likeButton' variable
-
+                        showToast.addClass("success-toast");
                         likeButton.find("i").css({
                             pointerEvents: 'none',
                             color: 'var(--heart-color)',
@@ -273,8 +227,10 @@ $(document).ready(function () {
                         });
                     }
                     setTimeout(function () {
+                        if(showToast){
                         showToast.hide();
                         showToast.removeClass("success-toast");
+                        }
                     }, 3500);
                 },
                 error: function (xhr, textStatus, errorThrown) {

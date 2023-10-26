@@ -372,7 +372,48 @@ if (document.getElementById("searchResults")) {
     window.addEventListener("scroll", handleScroll);
 }
 
-
+$(document).ready(function () {
+    $(".like").on("click", function () {
+        const userId = $(this).data("user-id");
+        const isLoggedIn = document.querySelector(".not-logged-in");
+        const productId = $(this).data("product-id");
+        const likeButton = $(this);
+        console.log("Clicked element:", this); 
+        if (!isLoggedIn) {
+            $.ajax({
+                type: "POST",
+                url: "add_to_favorites.php",
+                data: { user_id: userId, product_id: productId },
+                dataType: "json",
+                success: function (response) {
+                    console.log("Ajax response:", response); 
+                    if (response.status === "success") {
+                        var showToast = $("#cartAnnounce");
+                        showToast.show();
+                        showToast.text(response.message);
+                        showToast.addClass("success-announce");
+                        console.log("Like button:", likeButton); 
+                        likeButton.find("i").css({
+                            pointerEvents: 'none',
+                            color: 'var(--heart-color)',
+                            transform: 'scale(1.2)'
+                        });
+                    }
+                    setTimeout(function () {
+                        showToast.hide();
+                        showToast.removeClass("success-toast");
+                    }, 3500);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error("Error: " + textStatus, errorThrown);
+                    alert("Lỗi.");
+                }
+            });
+        } else {
+            showLoginAnnouncement();
+        }
+    });
+});
 $(document).ready(function () {
     $(".like").on("click", function () {
         const userId = $(this).data("user-id"); 
@@ -392,6 +433,7 @@ $(document).ready(function () {
                     showToast.text(response.message); 
                     showToast.addClass("success-toast"); 
                     likeButton.find("i").css({
+                        cursor: 'default',
                         pointerEvents: 'none',
                         color: 'var(--heart-color)',
                         transform: 'scale(1.2)'
@@ -402,8 +444,10 @@ $(document).ready(function () {
                     showToast.addClass("error-toast"); 
                 }
                 setTimeout(function() {
+                    if(showToast){
                     showToast.hide();
                     showToast.removeClass("success-toast error-toast");
+                    }
                 }, 3500);
             },
             error: function (xhr, textStatus, errorThrown) {

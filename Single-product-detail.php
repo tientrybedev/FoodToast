@@ -15,12 +15,13 @@ if (isset($_GET['product_id'])) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
-    $stmt = $conn->prepare($alreadyFavorSql);
-    $stmt->bind_param("is", $user_id, $product_id); 
-    $stmt->execute();
-    $favorResult = $stmt->get_result();
-    $isFavorited = $favorResult->num_rows > 0;
+    $alreadyFavorSql1 = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
+    $stmtfavor = $conn->prepare($alreadyFavorSql1);
+    $stmtfavor->bind_param("is", $user_id, $product_id); 
+    $stmtfavor->execute();
+    $favorResult1 = $stmtfavor->get_result();
+    $isFavorited1 = $favorResult1->num_rows > 0;
+
     
     if ($result->num_rows ===1) {
         $row = $result->fetch_assoc();
@@ -102,9 +103,21 @@ if (isset($_GET['product_id'])) {
         $related_product_price = $related_row['price'];
         $related_product_img = $related_row['image_1'];
 
+        $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
+        $stmt = $conn->prepare($alreadyFavorSql);
+        $stmt->bind_param("is", $user_id, $related_product_ID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $isFavorited = $result->num_rows > 0;
+        $stmt->close();
+        // $FPquery = "SELECT * FROM favorite_products WHERE user_id = $user_id AND product_id = '$related_product_ID'";
+        // $FPresult = mysqli_query($conn, $FPquery);
         $relateResPro .='<div class="card">';
         if(isset($user_id)){
         $relateResPro .= '<div class="like" data-user-id="' . $user_id . '" data-product-id="' . $related_product_ID . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
+        // if (mysqli_num_rows($FPresult) > 0) {
+        //     echo '<button class="removeFF-btn" data-product-id="' . $related_product_ID . '"><i class="fa-solid fa-x"></i></button>';
+        // }
         }else{
         $relateResPro .= '<div class="like not-logged-in" data-user-id="' . $user_id . '" data-product-id="' . $related_product_ID . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
         }
@@ -125,8 +138,10 @@ if (isset($_GET['product_id'])) {
         $relateResPro .= $related_product_ID;
 
         $relateResPro .= '" class="btn">Chi tiết sản phẩm<i class="fa-solid fa-circle-question"></i></a>';
-        if(!$isRestaurantLoggedIn){
+        if (!$isRestaurantLoggedIn && isset($user_id)){
             $relateResPro .='<button class="addToCart btn" data-product-id="' . $related_product_ID . '">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';
+        }else{
+            $relateResPro .='<button class="addToCart btn" onclick="showLoginAnnouncement(event) ">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';
         }
         $relateResPro .='</div>';
         $relateResPro .='</div>';
@@ -168,13 +183,14 @@ if (isset($_GET['product_id'])) {
                 $userCountResult = $stmtUsersCount->get_result();
                 $userCountRow = $userCountResult->fetch_assoc();
                 if ($user_comment_result->num_rows === 1) {
+                    $current_user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
                     $userRow = $user_comment_result->fetch_assoc();
                     $user_comment_avartar = $userRow['profile_image'];
-                    $user_commnet_id = $userRow['user_id']; 
-                    if($user_commnet_id ===isset($user_id)){
+                    $user_comment_id = $userRow['user_id']; 
+                    if (!is_null($current_user_id) && $user_comment_id === $current_user_id) {
                         $user_comment_name = 'Bạn';
-                    }else{
-                    $user_comment_name = $userRow['username'];
+                    } else {
+                        $user_comment_name = $userRow['username'];
                     }
                     
                     $userCommentsHtml .= '<div class="user-comment">';
@@ -234,7 +250,7 @@ if (isset($_GET['product_id'])) {
         $stmtRating->close();
     }
 
-    $conn->close();
+
 ?>
 
 
@@ -352,10 +368,10 @@ if (isset($_GET['product_id'])) {
                             echo '<div class="buy-btn">';
                             if(isset($user_id)){
                                 echo '<button class="addToCart btn" data-product-id="' . $product_id . '">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';
-                                echo '<div class="addToFavor btn" data-user-id="' . $user_id . '" data-product-id="' . $product_id . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
+                                echo '<div class="addToFavor btn" data-user-id="' . $user_id . '" data-product-id="' . $product_id . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited1 ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
                             }else{
                                 echo '<button class="addToCart btn" onclick="showLoginAnnouncement(event)">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';
-                                echo '<div class="addToFavor btn not-logged-in" data-user-id="' . $user_id . '" data-product-id="' . $product_id . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
+                                echo '<div class="addToFavor btn not-logged-in" data-user-id="' . $user_id . '" data-product-id="' . $product_id . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited1 ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
                             }
                             echo '</div>';
                             echo '</div>';
@@ -439,7 +455,45 @@ if (isset($_GET['product_id'])) {
             <?php echo $relateResPro; ?>
         </div>
     </section>
+    <footer>
+        <div class="footer-container" id="footer">
+            <div class="left box">
+                <h2>Thông tin</h2>
+                <p><strong>FoodToast</strong> cung cấp cho bạn trải nghiệm mua sắm đồ ăn trực tuyến thú vị. Đừng chần chừ, truy cập FoodToast để tiết kiệm thời gian và chi phí ngay nào.</p>
+            </div>
+            <div class="middle box">
+                <h2>Liên lạc</h2>
+                    <ul>
+                        <li><a href="#"><i class="fa-solid fa-phone fa-lg" style="color: #1d62d7;"></i>0935.68.68.68.</a> </li>
+                        <li><a href="#"><i class="fa-solid fa-envelope fa-lg" style="color: #d0c335;"></i>Tien@gmail.com.</a></li>
+                        <li><a href="#"><i class="fa-solid fa-location-dot fa-lg" style="color: #ff3300;"></i>Quận 10, Tp.Hồ Chí Minh.</a></li>    
+                    </ul>    
+            </div>
+            <div class="right box">
+                <h2>Dịch vụ</h2>
+                    <ul>
+                        <li><i class="fa-solid fa-truck-fast fa-lg" style="color: #208bee;"></i>Giao hàng</li>
+                        <li><i class="fa-regular fa-circle-check fa-lg" style="color: #2d9f3a;"></i> Giá tốt nhất</li>
+                        <li><i class="fa-solid fa-comments fa-lg" style="color: #2f64c1;"></i> Hỗ trợ 24/7</li>
+                        <li><i class="fa-solid fa-money-check-dollar fa-lg" style="color: #0e9a04;"></i> Thanh toán điện tử </li>
+                    </ul> 
+            </div>       
+        </div>
+
+        <hr style="margin: 0 auto; width: 50%; border: 1px groove gray;">
+        <div class="social-box">
+            <h2>Theo dõi ngay</h2>
+            <span><i class="fa-brands fa-facebook " ></i></span>
+            <span><i class="fa-brands fa-youtube " ></i></span>
+            <span><i class="fa-brands fa-twitter " ></i></span>
+            <span><i class="fa-brands fa-instagram "></i></span>
+            <span><i class="fa-brands fa-tiktok "></i></span>
+        </div>
+    </footer> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" ></script>
     <script src="js/single-product-detail.js"></script>
 </body>
+<?php
+    $conn->close();
+    ?>
 </html>

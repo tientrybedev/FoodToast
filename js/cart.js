@@ -120,7 +120,7 @@ function updateOverallTotal() {
             setTimeout(function () {
                 toast.style.display = "block";
                 $("#checked-total").removeClass("shake-animation")
-            }, 500);
+            }, 550);
             setTimeout(function () {
                 toast.style.display = "block";
             }, 100);

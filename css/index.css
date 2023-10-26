@@ -609,6 +609,8 @@ body::-webkit-scrollbar-thumb{
 }
 .favorite:hover,
 .user-detail-btn:hover{
+    opacity: 1;
+    text-shadow: 0 0 1px;
     border-bottom: 2px solid black;
 }
 .avatar-img{
@@ -751,7 +753,6 @@ body::-webkit-scrollbar-thumb{
     }
 }
 .btn-order{
-    font-size: large;
     cursor: pointer;
     padding: 15px;
     font-size: 20px;
@@ -896,7 +897,7 @@ body::-webkit-scrollbar-thumb{
     display: flex;
     padding: 4rem;
     margin: 10px;
-    column-gap: 20px;
+    gap: 20px;
 }
 .intro-img{
     flex-basis: 50%;
@@ -962,12 +963,12 @@ body::-webkit-scrollbar-thumb{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    row-gap: 2rem;  
+    gap: 2rem;  
 }
 .item { 
     position: relative;
-    width: 80%;
-    height: 450px;
+    width: 85%;
+    height: 460px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -985,7 +986,7 @@ body::-webkit-scrollbar-thumb{
     position: absolute;
     font-size: 1.2rem;
     top: 5px;
-    right: -20px;
+    right: .5rem;
     transition: .3s;
 }
 .like i{
@@ -995,9 +996,7 @@ body::-webkit-scrollbar-thumb{
     transform: scale(1.2);
     color: var(--heart-color);
 }
-.item:hover .like{
-    right: 8px;
-}
+
 .item .special-img{
     overflow: hidden;
     flex-basis: 50%;
@@ -1622,3 +1621,192 @@ footer{
 }
 
 
+@media screen and (max-width:1000px)  {
+    .btn-about{
+        right: 50%;
+    }
+    .btn-order{
+        right: 8%;
+    }
+.special-contain{
+    grid-template-columns: repeat(2, 1fr);
+}
+.cards .service-card{
+    width: min(100%, 480px);
+    gap: 15px;
+}
+.special-contain .item{
+    width: min(100%, 420px);
+}
+.brands{
+    width: 75%;
+}
+.brands .brands-container.second-row,
+.brands .brands-container{
+    flex-direction: column;
+    gap: 25px;
+}
+.intro.txt{
+    flex-direction: column;
+}
+.sec-two{
+    padding: 50px;
+}
+.img-res-link{
+    width: 100%;
+}
+.service-content .cards{
+    flex-direction: column;
+}
+.footer-container{
+    padding: 5px 1px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10%;
+}
+.box{
+    gap: 0;
+    flex-basis: 100%;
+}
+.box h2{
+    text-align: left;
+}
+.left p{
+    margin: 0;
+}
+.middle, .right{
+    text-align: left;
+}
+.partner-content{
+    flex-direction: column-reverse;
+    width: 80%;
+    padding: 40px;
+}
+.partner-content .partner-img{
+    width: 80%;
+}
+.partner-content .partner-txt{
+    border-radius: 15px;
+}
+.participate-content{
+    flex-direction: column;
+    padding: 35px;
+}
+}
+
+@media screen and (max-width:500px) {
+    .top-content h1{
+        font-size: 30px;
+        letter-spacing: 1px;
+    }
+    .top .btn-order{
+        width: max-content;
+        font-size: .9rem;
+        right: -3%;
+    }
+    .top .btn-about{
+        font-size: .9rem;
+        right: 55%;
+    }
+
+    .cards .service-card{
+        width: min(100%, 420px);
+        gap: 15px;
+    }
+    .service-card span{
+        letter-spacing: 1;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+    .sec-three{
+        padding: 30px;
+    }
+    .sec-two,
+    .sec-five{
+        padding: 10px;
+    }
+    .intro-content{
+        padding: 0;
+        gap: 15px
+    }
+    .intro-txt{
+        gap: 10px;
+        padding: 15px;
+        border-radius: 12px;
+    }
+    .intro-txt h3,
+    .intro-txt h1{
+        font-size: 1.3rem;
+        letter-spacing: 0px;
+        line-height: 2.5;
+    }
+    .intro-txt p{
+        line-height: 1.5;
+    }
+    .sec-header1,
+    .sec-header6,
+    .sec-header3{
+        letter-spacing: 1px;
+        font-size: 1.6rem;
+    }
+    .sec-header6{
+        width: max-content;
+    }
+    .sec-header1{
+        margin-bottom: 15px;
+    }
+    .item{
+        width: 80%;
+    }
+    .item .special-img{
+        flex-basis: 45%;
+    }
+    .item .special-content h2 {
+        letter-spacing: 1px;
+        font-size: 1.2rem;
+    }
+    .into-cart-btn,
+    .info-btn{
+        padding: 5px;
+    }
+    .testimonial{
+        padding: 20px;
+    }
+    .testimonial .brands{
+        width: 100%;
+    }
+    .brands .brands-container.second-row,
+    .brands .brands-container{
+        gap: 15px;
+    }
+    .participate-content{
+        padding: 20px;
+    }
+    .participate .btn-for-user{
+        flex-direction: column;
+    }
+    .partner-content{
+        width: 95%;
+        padding: 20px;
+    }
+    .partner-content .partner-img{
+        width: 100%;
+    }
+
+
+.footer-container{
+    padding: 5px 1px;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.box{
+    text-align: center;
+}
+.box h2{
+    text-align: center;
+}
+.social-box span{
+    margin: 0;
+}
+}

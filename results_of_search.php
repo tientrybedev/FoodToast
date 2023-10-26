@@ -8,18 +8,11 @@ if (isset($_GET['search-query'])) {
 }
     $recordsPerPage = 12;
     $totalRecords = mysqli_num_rows($search_result);
-
-$totalPages = ceil($totalRecords / $recordsPerPage);
-
-// Calculate the current page from the URL
-$currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
-// Calculate the offset for the SQL query
-$offset = ($currentPage - 1) * $recordsPerPage;
-
-// Modify your SQL query
-$sql = "SELECT * FROM products WHERE name LIKE '%$query%' LIMIT $recordsPerPage OFFSET $offset";
-$result = mysqli_query($conn, $sql);
+    $totalPages = ceil($totalRecords / $recordsPerPage);
+    $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
+    $offset = ($currentPage - 1) * $recordsPerPage;
+    $sql = "SELECT * FROM products WHERE name LIKE '%$query%' LIMIT $recordsPerPage OFFSET $offset";
+    $result = mysqli_query($conn, $sql);
 
 ?>
 <!DOCTYPE html>
@@ -105,6 +98,41 @@ $result = mysqli_query($conn, $sql);
         }
         echo '</div>';
     ?>
+    <footer>
+        <div class="footer-container" id="footer">
+            <div class="left box">
+                <h2>Thông tin</h2>
+                <p><strong>FoodToast</strong> cung cấp cho bạn trải nghiệm mua sắm đồ ăn trực tuyến thú vị. Đừng chần chừ, truy cập FoodToast để tiết kiệm thời gian và chi phí ngay nào.</p>
+            </div>
+            <div class="middle box">
+                <h2>Liên lạc</h2>
+                    <ul>
+                        <li><a href="#"><i class="fa-solid fa-phone fa-lg" style="color: #1d62d7;"></i>0935.68.68.68.</a> </li>
+                        <li><a href="#"><i class="fa-solid fa-envelope fa-lg" style="color: #d0c335;"></i>Tien@gmail.com.</a></li>
+                        <li><a href="#"><i class="fa-solid fa-location-dot fa-lg" style="color: #ff3300;"></i>Quận 10, Tp.Hồ Chí Minh.</a></li>    
+                    </ul>    
+            </div>
+            <div class="right box">
+                <h2>Dịch vụ</h2>
+                    <ul>
+                        <li><i class="fa-solid fa-truck-fast fa-lg" style="color: #208bee;"></i>Giao hàng</li>
+                        <li><i class="fa-regular fa-circle-check fa-lg" style="color: #2d9f3a;"></i> Giá tốt nhất</li>
+                        <li><i class="fa-solid fa-comments fa-lg" style="color: #2f64c1;"></i> Hỗ trợ 24/7</li>
+                        <li><i class="fa-solid fa-money-check-dollar fa-lg" style="color: #0e9a04;"></i> Thanh toán điện tử </li>
+                    </ul> 
+            </div>       
+        </div>
+
+        <hr style="margin: 0 auto; width: 50%; border: 1px groove gray;">
+        <div class="social-box">
+            <h2>Theo dõi ngay</h2>
+            <span><i class="fa-brands fa-facebook " ></i></span>
+            <span><i class="fa-brands fa-youtube " ></i></span>
+            <span><i class="fa-brands fa-twitter " ></i></span>
+            <span><i class="fa-brands fa-instagram "></i></span>
+            <span><i class="fa-brands fa-tiktok "></i></span>
+        </div>
+    </footer> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" ></script> 
     <script src="js/results_of_search.js"></script>
 </body>

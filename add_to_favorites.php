@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $resultCheck = $stmtCheck->get_result();
 
     if ($resultCheck->num_rows === 0) {
-        // If not in favorites, insert it
         $sqlInsert = "INSERT INTO favorite_products (user_id, product_id) VALUES (?, ?)";
         $stmtInsert = $conn->prepare($sqlInsert);
         $stmtInsert->bind_param("is", $user_id, $product_id);
@@ -26,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $stmtInsert->close();
     } else {
-        $response = ["status" => "error", "message" => "Sản phẩm đã trong yêu thích."];
+        $response = ["status" => "error", "message" => "Đã có trong yêu thích."];
     }
 
     $stmtCheck->close();

@@ -146,7 +146,7 @@ if ($isUserLoggedIn) {
                 <a href="#introduce" ><img src="Home-img/sb-question.png" title="Giới Thiệu" alt=""></a>
             </div>
             <div class="item-img">
-                <a href="#special"><img src="products-img/special.png" title="Món Đặc biệt" alt=""></a>
+                <a href="#special"><img src="Home-img/special.png" title="Món Đặc biệt" alt=""></a>
             </div>
             <div class="item-img">
                 <a href="#testimonial"><img src="Home-img/sb-testimonial.png" title="Ý kiến" alt=""></a>
@@ -228,10 +228,22 @@ if ($isUserLoggedIn) {
             <div class="special-contain">
             <?php $sqlIndex = "SELECT product_id, image_1, name, price FROM products ORDER BY RAND() LIMIT 6";
                 $Randomresult = $conn->query($sqlIndex);
-
                 if ($Randomresult->num_rows > 0) {
                     while ($row = $Randomresult->fetch_assoc()) {
+                        $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
+                        $stmt = $conn->prepare($alreadyFavorSql);
+                        $stmt->bind_param("is", $user_id, $row["product_id"]); 
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        $isFavorited = $result->num_rows > 0;
+                        $stmt->close();
                         echo '<div class="item">';
+                        if ($user_id){
+                            echo '<div class="like" data-user-id="' . $user_id . '" data-product-id="' . $row["product_id"] . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2); cursor: default;"' : '') . '></i></div>';
+                        }
+                        else{
+                            echo '<div class="like not-logged-in " data-user-id="' . $user_id . '" data-product-id="' . $row["product_id"] . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2); cursor: default;"' : '') . '></i></div>';
+                        }
                         echo'<div class="special-img">';
                         echo'<img src="' .$row['image_1'] . '" alt="">
                     </div>';

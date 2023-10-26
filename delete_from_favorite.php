@@ -1,5 +1,4 @@
 <?php
-
 include("connect.php");
 if (isset($_POST['delete'])) {
     $product_id = $_POST['product_id'];

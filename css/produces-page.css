@@ -529,7 +529,7 @@ body{
     background-color: var(--show-color);
     border-radius: 5px;
     cursor: pointer;
-    z-index: 4;
+    z-index: 2;
 }
 .bar .bar-content{
     width: 30px;
@@ -574,12 +574,12 @@ body{
     margin: 0 auto;
     background-color:  rgba(245, 245, 245, 0.8);    
     border-radius: 2px 1px 25px 70px;
-    z-index: 4;
+    z-index: 2;
     transition: .4s;
     overflow: hidden;
 }
 .bar-active{
-    height: 450px;
+    height: 350px;
 }
 .hidden-bar-links{
     width: 100%;
@@ -613,25 +613,46 @@ body{
 }
 .hidden-bar-function{
     margin-left: 10px;
+    position: relative;
 }
 .hidden-bar-function > div{
     margin:5px 0;
 }
-.hidden-bar-function .search{
+.hidden-bar-function .search form{
     width: 100%; 
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
-.hidden-bar-function .search i{
-    margin-right: 10px;
-    padding: 5px;
+.hidden-bar-function .btn-login-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.hidden-bar-function .cart{
+    position: absolute;
+    top: 77px;
+    right: 20px;
+}
+.hidden-bar-function .search form .category-search{
+    position: absolute;
+    top: 5px;
+    right: 12px;
+}
+.hidden-bar-function .search .fa-lg{
+    position: absolute;
+    top: 20px;
+    left: 12px;
 }
 .hidden-bar-function .search input{
-    padding: 10px;
+    padding: 10px 45px;
     font-size: 1rem;
-    border-radius: 0 10px 10px 0;
+    border-radius: 10px;
+
 }
+
 
 
 /*
@@ -803,7 +824,7 @@ body{
     position: relative;
     overflow: hidden;
     min-height: 100vh;
-    background: url(../products-img/menu-intro.jpg) no-repeat;
+    background: url(../Home-img/menu-intro.jpg) no-repeat;
     background-position: center;
     background-size: cover;
 }
@@ -1164,19 +1185,7 @@ body{
     transform: translate(-3px, -4px) ;
     box-shadow: 3px 5px black;
 }
-/* .stuff-container .card:hover .btn{
-    opacity: 1;
-}
-.card-body .card-link .btn i{
-    transition: .3s;
-}
-.card-body .card-link .btn:hover{
-    color: white;
-}
-.card-body .card-link .btn:hover i {
-    color: white;
-    transform: scale(1.1);
-} */
+
 @media screen and (max-width: 900px) {
     .wrapper .carousel {
     grid-auto-columns: calc((100% / 2) - 25px);

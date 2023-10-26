@@ -86,7 +86,7 @@ if ($drinkResult->num_rows === 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/produces-page.css">
-    <title>Products Page</title>
+    <title>Thực đơn</title>
     <link rel="shortcut icon" href="Home-img/food-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -223,25 +223,39 @@ if ($drinkResult->num_rows === 0) {
         </div>
         <div class="hidden-bar">
                 <div class="hidden-bar-links">
-                        <a href="index.html" ><li>Trang chủ</li></a>
+                        <a href="index.php" ><li>Trang chủ</li></a>
                         <a href="#" class="menu-active"><li>Menu</li></a>
-                        <a href="#" ><li>Đặc biệt</li></a>
-                        <a href="#"><li>Dịch vụ</li></a>
-                        <a href="#"><li>Thông tin</li></a>
+                        <a href="restaurant_page.php" ><li>Nhà hàng</li></a>
             </div>
             <div class="hidden-bar-function">
-                    <div class="search">
-                        <div class="search-icon"><i class="fa-solid fa-magnifying-glass fa-lg">
-                        </i></div>
-                            <input type="text">
-                    </div>
-                    <div class="cart">
-                        <a href="cart.php"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+            <div class="search">
+                        <form action="results_of_search.php" method="get">
+                            <input type="text" id="searchInput" name="search-query"  placeholder="Tìm kiếm sản phẩm" autocomplete="off"  onkeyup="liveSearch(this.value);">
+                            <div class="category-search"><a href="advance_search.php"><i class="fa-solid fa-sliders"></a></i></div>
+                            <button class="sear-btn" type="submit"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
+                        </form>
                     </div>
                     <div class="btn-login">
-                        <a href="login.html"><i class="fa-solid fa-user fa-lg"></i> Đăng nhập </a>
+                        <div class="btn-login-container">
+                            <div class="btn-login-content">
+                                    <div class="avatar-img">
+                                        <img id="profileImage" src="<?php echo $profileImage; ?>" alt="">
+                                    </div>
+                                <?php echo $userNameIn; ?>
+                                <?php echo $userHis; ?>
+                                <?php echo $userBtnOut; ?>
+                            </div>
+                        </div>
                     </div>
-                    <button>log out</button>
+                    <div class="cart">
+                    <?php if($isUserLoggedIn): ?>
+                            <a href="cart.php"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+                            <span id="hidden-cartBadge" class="badge"></span> 
+                        <?php else: ?>
+                            <a href="cart.php" onclick="showLoginAnnouncement(event)"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+                            <span id="hidden-cartBadge" class="badge"></span> 
+                        <?php endif; ?>
+                    </div>
             </div>
         </div>
         <header class="start-header">
@@ -255,7 +269,7 @@ if ($drinkResult->num_rows === 0) {
             <div class="img-container">
                 <img src="Home-img/special.png" alt="">
             </div>
-            <h3>Món đặt biệt</h3>
+            <h3>Món đặc biệt</h3>
         </div>
         <div class="container">
             <div class="item" id="item1">
@@ -298,212 +312,47 @@ if ($drinkResult->num_rows === 0) {
     </section>
     <section class="section-special" id="special">
         <div class="special-content">
-            <h1>Món đặt biệt hôm nay</h1>
-        <div class="wrapper">
-            <i id="left" class="fa-solid fa-chevron-left"></i>
-            <ul class="carousel">
-                <li class="guest-card">
-                    <div class="guest-img">
-                        <img src="Home-img/rice1.png" alt="img" draggable="false"></div>
-                        <div class="guest-comment">
-                            <h2>Cơm gà</h2>
-                        </div>
-                            <div class="rate">
-                                <p>Đánh Giá:</p>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-regular fa-star-half-stroke"></i>
-                            </div>
-                            <div class="price">
-                                <p>Giá:<p> <strong>150.000 VNĐ</strong>
-                            </div>
-                            <div class="card-link">
-                                <a href="#" class="btn">Tìm hiểu thêm <i class="fa-solid fa-circle-question"></i></a>
-                                <a href="#" class="btn">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a> 
-                            </div>
-                </li>
-                <li class="guest-card">
-                    <div class="guest-img">
-                        <img src="Home-img/log1.1.jpg" alt="img-product" draggable="false"></div>
-                        <div class="guest-comment">
-                            <h2>Cơm gà</h2>
-                        </div>
-                            <div class="rate">
-                                <p>Đánh Giá:</p>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-regular fa-star-half-stroke"></i>
-                            </div>
-                            <div class="price">
-                                <p>Giá:<p> <strong>150.000 VNĐ</strong>
-                            </div>
-                            <div class="card-link">
-                                <a href="#" class="btn">Tìm hiểu thêm <i class="fa-solid fa-circle-question"></i></a>
-                                <a href="#" class="btn" onclick="addToCart()">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a> 
-                            </div>
-                </li>
-                <li class="guest-card">
-                    <div class="guest-img">
-                        <img src="Home-img/log2.1.jpg" alt="img" draggable="false"></div>
-                        <div class="guest-comment">
-                            <h2>Cơm gà</h2>
-                        </div>
-                            <div class="rate">
-                                <p>Đánh Giá:</p>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-regular fa-star-half-stroke"></i>
-                            </div>
-                            <div class="price">
-                                <p>Giá:<p> <strong>150.000 VNĐ</strong>
-                            </div>
-                            <div class="card-link">
-                                <a href="#" class="btn">Tìm hiểu thêm <i class="fa-solid fa-circle-question"></i></a>
-                                <a href="#" class="btn">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a> 
-                            </div>
-                </li>
-                <li class="guest-card">
-                    <div class="guest-img">
-                        <img src="Home-img/log3.1.jpg" alt="img" draggable="false"></div>
-                        <div class="guest-comment">
-                            <h2>Cơm gà</h2>
-                        </div>
-                            <div class="rate">
-                                <p>Đánh Giá:</p>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-regular fa-star-half-stroke"></i>
-                            </div>
-                            <div class="price">
-                                <p>Giá:<p> <strong>150.000 VNĐ</strong>
-                            </div>
-                            <div class="card-link">
-                                <a href="#" class="btn">Tìm hiểu thêm <i class="fa-solid fa-circle-question"></i></a>
-                                <a href="#" class="btn">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a> 
-                            </div>
-                </li>
-                <li class="guest-card">
-                    <div class="guest-img">
-                        <img src="Home-img/potato1.png" alt="img" draggable="false"></div>
-                        <div class="guest-comment">
-                            <h2>Cơm gà</h2>
-                        </div>
-                            <div class="rate">
-                                <p>Đánh Giá:</p>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-regular fa-star-half-stroke"></i>
-                            </div>
-                            <div class="price">
-                                <p>Giá:<p> <strong>150.000 VNĐ</strong>
-                            </div>
-                            <div class="card-link">
-                                <a href="#" class="btn">Tìm hiểu thêm <i class="fa-solid fa-circle-question"></i></a>
-                                <a href="#" class="btn">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a> 
-                            </div>
-                </li>
-                <li class="guest-card">
-                    <div class="guest-img">
-                        <img src="Home-img/chicken1.png" alt="img" draggable="false"></div>
-                        <div class="guest-comment">
-                            <h2>Cơm gà</h2>
-                        </div>
-                            <div class="rate">
-                                <p>Đánh Giá:</p>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-regular fa-star-half-stroke"></i>
-                            </div>
-                            <div class="price">
-                                <p>Giá:<p> <strong>150.000 VNĐ</strong>
-                            </div>
-                            <div class="card-link">
-                                <a href="#" class="btn">Tìm hiểu thêm <i class="fa-solid fa-circle-question"></i></a>
-                                <a href="#" class="btn">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a> 
-                            </div>
-                </li>
-                <li class="guest-card">
-                    <div class="guest-img">
-                        <img src="Home-img/rice1.png" alt="img" draggable="false"></div>
-                        <div class="guest-comment">
-                            <h2>Cơm gà</h2>
-                        </div>
-                            <div class="rate">
-                                <p>Đánh Giá:</p>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-regular fa-star-half-stroke"></i>
-                            </div>
-                            <div class="price">
-                                <p>Giá:<p> <strong>150.000 VNĐ</strong>
-                            </div>
-                            <div class="card-link">
-                                <a href="#" class="btn">Tìm hiểu thêm <i class="fa-solid fa-circle-question"></i></a>
-                                <a href="#" class="btn">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a> 
-                            </div>
-                </li>
-                <li class="guest-card">
-                    <div class="guest-img">
-                        <img src="products-img/rice1.png" alt="img" draggable="false"></div>
-                        <div class="guest-comment">
-                            <h2>Cơm gà</h2>
-                        </div>
-                            <div class="rate">
-                                <p>Đánh Giá:</p>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-solid  fa-star"></i>
-                                <i class="fa-regular fa-star-half-stroke"></i>
-                            </div>
-                            <div class="price">
-                                <p>Giá:<p> <strong>150.000 VNĐ</strong>
-                            </div>
-                            <div class="card-link">
-                                <a href="#" class="btn">Tìm hiểu thêm <i class="fa-solid fa-circle-question"></i></a>
-                                <a href="#" class="btn">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a> 
-                            </div>
-                </li>
-                <li class="guest-card">
-                    <div class="guest-img">
-                        <img src="products-img/rice1.png" alt="img" draggable="false">
-                    </div>
-                        <div class="guest-comment">
-                            <h2>Cơm gà</h2>
-                        </div>
-                        <div class="rate">
-                            <p>Đánh Giá:</p>
-                            <i class="fa-solid  fa-star"></i>
-                            <i class="fa-solid  fa-star"></i>
-                            <i class="fa-solid  fa-star"></i>
-                            <i class="fa-solid  fa-star"></i>
-                            <i class="fa-regular fa-star-half-stroke"></i>
-                        </div>
-                        <div class="price">
-                            <p>Giá:<p> <strong>150.000 VNĐ</strong>
-                        </div>
-                        <div class="card-link">
-                            <a href="#" class="btn">Tìm hiểu thêm <i class="fa-solid fa-circle-question"></i></a>
-                            <a href="#" class="btn">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a> 
-                        </div>
-                </li>
-            </ul>
-            <i id="right" class="fa-solid fa-chevron-right"></i>
-        </div>
+            <h1>Món đặc biệt hôm nay</h1>
+            <div class="wrapper">
+    <i id="left" class="fa-solid fa-chevron-left"></i>
+    <ul class="carousel">
+        <?php
+        $randomProductSql = "SELECT product_id, image_1, name, price FROM products ORDER BY RAND() LIMIT 9";
+        $randomProductResult = $conn->query($randomProductSql);
+        while ($row = $randomProductResult->fetch_assoc()) {
+            echo '<li class="guest-card">';
+            echo '<div class="guest-img">';
+            echo '<img src="' . $row['image_1'] . '" alt="img" draggable="false">';
+            echo '</div>';
+            echo '<div class="guest-comment">';
+            echo '<h2>' . $row['name'] . '</h2>';
+            echo '</div>';
+            echo '<div class="rate">';
+            echo '<p>Đánh Giá:</p>';
+            echo '<i class="fa-solid fa-star"></i>';
+            echo '<i class="fa-solid fa-star"></i>';
+            echo '<i class="fa-solid fa-star"></i>';
+            echo '<i class="fa-solid fa-star"></i>';
+            echo '<i class="fa-regular fa-star-half-stroke"></i>';
+            echo '</div>';
+            echo '<div class="price">';
+            echo '<p>Giá:<p> <strong>' . $row['price'] . ' VNĐ</strong>';
+            echo '</div>';
+            echo '<div class="card-link">';
+            echo '<a href="Single-product-detail.php?product_id=' . $row['product_id'] . '" class="btn">Tìm hiểu thêm <i class="fa-solid fa-circle-question"></i></a>';
+            if ($isUserLoggedIn) {
+                echo '<a href="#" class="btn" onclick="addToCart()">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a>';
+            } else {
+                echo '<a href="#" class="btn" onclick="showLoginAnnouncement(event)">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a>';
+            }
+            echo '</div>';
+            echo '</li>';
+        }
+        ?>
+    </ul>
+    <i id="right" class="fa-solid fa-chevron-right"></i>
+</div>
+
         </div>
     </section>
     <!-- ===================================================================================
@@ -537,8 +386,11 @@ if ($drinkResult->num_rows === 0) {
         $stmt->close();
         ?>
         <div class="card <?php echo ($cardCount >= 4) ? 'hidden' : ''; ?>">
-            <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i>
-            </div>
+        <?php if ($isUserLoggedIn): ?>
+            <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2); cursor: default;"': ''; ?>></i></div>
+        <?php else: ?>
+            <div class="like not-logged-in " data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i></div>
+        <?php endif; ?>
             <div class="fpic-container">
                 <img src="<?php echo $pro_img; ?>" class="card-img-top" alt="">
             </div>
@@ -596,7 +448,7 @@ if ($drinkResult->num_rows === 0) {
     ?>
         <div class="card <?php echo ($cardCount >= 4) ? 'hidden' : ''; ?>">
         <?php if ($isUserLoggedIn): ?>
-            <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i></div>
+            <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2); cursor: default;"': ''; ?>></i></div>
         <?php else: ?>
             <div class="like not-logged-in " data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i></div>
         <?php endif; ?>
@@ -655,8 +507,11 @@ if ($drinkResult->num_rows === 0) {
         $stmt->close();
         ?>
         <div class="card <?php echo ($cardCount >= 4) ? 'hidden' : ''; ?>">
-            <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i>
-            </div>
+        <?php if ($isUserLoggedIn): ?>
+            <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2); cursor: default;"': ''; ?>></i></div>
+        <?php else: ?>
+            <div class="like not-logged-in " data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i></div>
+        <?php endif; ?>
             <div class="fpic-container">
                 <img src="<?php echo $row['image_1']; ?>" class="card-img-top" alt="">
             </div>
@@ -712,8 +567,11 @@ if ($drinkResult->num_rows === 0) {
         $stmt->close();
     ?>
         <div class="card <?php echo ($cardCount >= 4) ? 'hidden' : ''; ?>">
-            <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i>
-            </div>
+        <?php if ($isUserLoggedIn): ?>
+            <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2); cursor: default;"': ''; ?>></i></div>
+        <?php else: ?>
+            <div class="like not-logged-in " data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i></div>
+        <?php endif; ?>
             <div class="fpic-container">
                 <img src="<?php echo $row['image_1']; ?>" class="card-img-top" alt="">
             </div>
@@ -769,8 +627,11 @@ if ($drinkResult->num_rows === 0) {
         $stmt->close();
         ?>
         <div class="card <?php echo ($cardCount >= 4) ? 'hidden' : ''; ?>">
-            <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i>
-            </div>
+        <?php if ($isUserLoggedIn): ?>
+            <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2); cursor: default;"': ''; ?>></i></div>
+        <?php else: ?>
+            <div class="like not-logged-in " data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i></div>
+        <?php endif; ?>
             <div class="fpic-container">
                 <img src="<?php echo $row['image_1']; ?>" class="card-img-top" alt="">
             </div>
@@ -826,8 +687,11 @@ if ($drinkResult->num_rows === 0) {
         $stmt->close();
     ?>
         <div class="card <?php echo ($cardCount >= 4) ? 'hidden' : ''; ?>">
-        <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i>
-            </div>
+        <?php if ($isUserLoggedIn): ?>
+            <div class="like" data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2); cursor: default;"': ''; ?>></i></div>
+        <?php else: ?>
+            <div class="like not-logged-in " data-user-id="<?php echo $user_id; ?>" data-product-id="<?php echo $pro_id; ?>"><i class="fa-solid fa-heart" title="Yêu thích" <?php echo $isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"': ''; ?>></i></div>
+        <?php endif; ?>
             <div class="fpic-container">
                 <img src="<?php echo $row['image_1']; ?>" class="card-img-top" alt="">
             </div>

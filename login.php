@@ -52,7 +52,7 @@ $conn->close();
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="Home-img/food-logo.png" type="image/x-icon">
     <script src="https://unpkg.com/scrollreveal"></script>
-    <title>Login</title>
+    <title>Đăng nhập</title>
 </head>
 <body>
     <div class="all">

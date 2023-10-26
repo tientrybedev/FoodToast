@@ -1,68 +1,53 @@
+//Loading overlay
 window.addEventListener("load", () => {
-    // Add the class that disables scrolling
     document.body.classList.add("disable-scroll");
-
-    // Delay for 4 seconds (4000 milliseconds) before removing the loader
     setTimeout(() => {
         const loaderContainer = document.querySelector(".loader-container");
         loaderContainer.classList.add("loader-container--hidden");
 
         setTimeout(() => {
-            // Remove the class that disables scrolling
+            // không scroll khi loading
             document.body.classList.remove("disable-scroll");
             loaderContainer.remove();
         }, 200);
     }, 4200);
 });
 document.addEventListener('DOMContentLoaded', function () {
-    // Get references to the modal and buttons
     var lgOut = document.getElementById("lg-out-message");
     var confirmButton = document.getElementById("confirmLogout");
     var cancelButton = document.getElementById("cancelLogout");
     var lgOutBtn = document.querySelector(".log-out-btn");
-
     if(lgOutBtn){
     function openMes() {
         lgOut.style.display = "block";
-        document.body.classList.add("message-open"); // Add the class
+        document.body.classList.add("message-open"); 
     }
-
-    // Function to close the modal
     function closeMes() {
         lgOut.style.display = "none";
         document.body.classList.remove("message-open"); 
     }
-
-    // Show the modal when the "Log Out" button is clicked
     lgOutBtn.addEventListener("click", openMes);
-
-    // Close the modal when the "Cancel" button is clicked
     cancelButton.addEventListener("click", closeMes);
-
-    // Redirect to logout.php when the "Confirm" button is clicked
     confirmButton.addEventListener("click", function() {
         window.location.href = "log_out.php";
     });
 }
 });
 
-
-
 //==========================================================================================
 //==========================================================================================
 //===============================================sticky-navbar
 //==========================================================================================
 //==========================================================================================
+//Thanh công cụ
 let prevScrollPos = window.pageYOffset;
 let isNavVisible = true;
 let reachedTop = false;
-
 window.addEventListener("scroll", function() {
     var nav = document.querySelector(".nav-bar");
     var currentScrollPos = window.pageYOffset;
-
     if (prevScrollPos > currentScrollPos) {
-        // Scrolling up
+        // Kéo lên
         if (!isNavVisible) {
             nav.style.top = "0";
             nav.classList.add("sticky");
@@ -76,19 +61,16 @@ window.addEventListener("scroll", function() {
             isNavVisible = false;
         }
     }
-
     if (currentScrollPos === 0) {
         reachedTop = true;
     } else {
         reachedTop = false;
     }
-
     if (reachedTop) {
         nav.classList.remove("sticky");
     } else {
         nav.classList.add("sticky");
     }
-
     prevScrollPos = currentScrollPos;
 });
 window.addEventListener("scroll", function() {
@@ -96,17 +78,17 @@ window.addEventListener("scroll", function() {
     const start = document.querySelector(".top-content");
     const end = document.querySelector("#footer");
 
-    // Calculate the position of section 1 and section 6 relative to the viewport
+    // Tính toán vị trí giữa 2 section
     const rectS = start.getBoundingClientRect();
     const rectE = end.getBoundingClientRect();
 
-    // If section 1 is above the viewport and section 6 is below the viewport, show the sidebar
+    // hiển thị side bar
     if (rectS.bottom < 0 && rectE.top > window.innerHeight) {
-        sidebar.style.opacity = "1"; // Set opacity to 1 to make it visible
-        sidebar.style.pointerEvents = "auto"; // Enable pointer events
+        sidebar.style.opacity = "1"; 
+        sidebar.style.pointerEvents = "auto"; 
     } else {
-        sidebar.style.opacity = "0"; // Set opacity to 0 to hide it
-        sidebar.style.pointerEvents = "none"; // Disable pointer events
+        sidebar.style.opacity = "0"; 
+        sidebar.style.pointerEvents = "none"; 
     }
 });
 const bar =document.querySelector('.bar');
@@ -115,8 +97,6 @@ bar.onclick = function(){
     bar.classList.toggle('openbar')
     hiddenMenu.classList.toggle('bar-active')
 }
-
-
 
  // ==========================================================================
   // ==========================================================================
@@ -130,21 +110,16 @@ const arrowBtns = document.querySelectorAll(".wrapper i");
 const carouselChildrens = [...carousel.children];
 
 let isDragging = false, isAutoPlay = true, startX, startScrollLeft, timeoutId;
-// Get the number of cards that can fit in the carousel at once
 let cardPerView = Math.round(carousel.offsetWidth / firstCardWidth);
-// Insert copies of the last few cards to beginning of carousel for infinite scrolling
 carouselChildrens.slice(-cardPerView).reverse().forEach(card => {
     carousel.insertAdjacentHTML("afterbegin", card.outerHTML);
 });
-// Insert copies of the first few cards to end of carousel for infinite scrolling
 carouselChildrens.slice(0, cardPerView).forEach(card => {
     carousel.insertAdjacentHTML("beforeend", card.outerHTML);
 });
-// Scroll the carousel at appropriate postition to hide first few duplicate cards on Firefox
 carousel.classList.add("no-transition");
 carousel.scrollLeft = carousel.offsetWidth;
 carousel.classList.remove("no-transition");
-// Add event listeners for the arrow buttons to scroll the carousel left and right
 arrowBtns.forEach(btn => {
     btn.addEventListener("click", () => {
         carousel.scrollLeft += btn.id == "left" ? -firstCardWidth : firstCardWidth;
@@ -153,13 +128,11 @@ arrowBtns.forEach(btn => {
 const dragStart = (e) => {
     isDragging = true;
     carousel.classList.add("dragging");
-    // Records the initial cursor and scroll position of the carousel
     startX = e.pageX;
     startScrollLeft = carousel.scrollLeft;
 }
 const dragging = (e) => {
-    if(!isDragging) return; // if isDragging is false return from here
-    // Updates the scroll position of the carousel based on the cursor movement
+    if(!isDragging) return;
     carousel.scrollLeft = startScrollLeft - (e.pageX - startX);
 }
 const dragStop = () => {
@@ -167,25 +140,21 @@ const dragStop = () => {
     carousel.classList.remove("dragging");
 }
 const infiniteScroll = () => {
-    // If the carousel is at the beginning, scroll to the end
     if(carousel.scrollLeft === 0) {
         carousel.classList.add("no-transition");
         carousel.scrollLeft = carousel.scrollWidth - (2 * carousel.offsetWidth);
         carousel.classList.remove("no-transition");
     }
-    // If the carousel is at the end, scroll to the beginning
     else if(Math.ceil(carousel.scrollLeft) === carousel.scrollWidth - carousel.offsetWidth) {
         carousel.classList.add("no-transition");
         carousel.scrollLeft = carousel.offsetWidth;
         carousel.classList.remove("no-transition");
     }
-    // Clear existing timeout & start autoplay if mouse is not hovering over carousel
     clearTimeout(timeoutId);
     if(!wrapper.matches(":hover")) autoPlay();
 }
 const autoPlay = () => {
-    if(window.innerWidth < 800 || !isAutoPlay) return; // Return if window is smaller than 800 or isAutoPlay is false
-    // Autoplay the carousel after every 2500 ms
+    if(window.innerWidth < 800 || !isAutoPlay) return; 
     timeoutId = setTimeout(() => carousel.scrollLeft += firstCardWidth, 2500);
 }
 autoPlay();
@@ -290,12 +259,12 @@ $(document).ready(function() {
             }
         });
     }    
-    //thêm sản phẩm vào giỏ hàng
+    //chức năng thêm sản phẩm vào giỏ hàng, cập nhật số lượng sản phẩm trong giỏ hàng   
         function updateCartBadge() {
         $.ajax({
             type: "GET",
             url: "cart_count.php",
-            dataType: "json", // Replace with the actual URL to get cart count
+            dataType: "json", 
             success: function(response) {
                 var cartCount = response.count;
                 $("#cartBadge").text(response.count);
@@ -328,7 +297,7 @@ $(document).ready(function() {
                 }
                 setTimeout(function() {
                     showToast.hide();
-                    showToast.removeClass("success-toast error-toast"); // Remove styling 
+                    showToast.removeClass("success-toast error-toast"); 
                 }, 3500);
             }
         });
@@ -339,32 +308,7 @@ $(document).ready(function() {
     });
     updateCartBadge();
 });
-
-
-$(document).ready(function () {
-    var brandsContainer = $(".brands-container");
-    var secondRow = $(".brands-container.second-row");
-    var showSecondRowButton = $("#showSecondRowButton");
-    var viewAllLink = $("#viewAllLink");
-
-    // Initially, hide the second row and the "View All" link.
-    secondRow.hide();
-    viewAllLink.hide();
-
-    // Check if there are more than 4 brand images to show the "Show More" button.
-    if (brandsContainer.children().length > 4) {
-        showSecondRowButton.show();
-    }
-
-    // Toggle the visibility of the second row when clicking the "Show More" button.
-    showSecondRowButton.click(function () {
-        secondRow.slideToggle();
-        showSecondRowButton.text(function (i, text) {
-            return text === "Xem Thêm" ? "Ẩn bớt" : "Xem Thêm";
-        });
-    });
-});
-
+//thông báo nếu chưa đăng nhập 
 function showLoginAnnouncement(event) {
     if(event){
         event.preventDefault();
@@ -385,3 +329,73 @@ function showLoginAnnouncement(event) {
         }, 4000);
     }
 }
+
+$(document).ready(function () {
+    var brandsContainer = $(".brands-container");
+    var secondRow = $(".brands-container.second-row");
+    var showSecondRowButton = $("#showSecondRowButton");
+    var viewAllLink = $("#viewAllLink");
+    // nếu có ít hơn 4 nhà hàng
+    secondRow.hide();
+    viewAllLink.hide();
+    // điều kiện nếu có trên 4 nhà hàng
+    if (brandsContainer.children().length > 4) {
+        showSecondRowButton.show();
+    }
+    // mở hàng thứ hai nhà hàng
+    showSecondRowButton.click(function () {
+        secondRow.slideToggle();
+        showSecondRowButton.text(function (i, text) {
+            return text === "Xem Thêm" ? "Ẩn bớt" : "Xem Thêm";
+        });
+    });
+});
+
+//chức năng thêm vào yêu thích -Ajax-
+$(document).ready(function () {
+    $(".like").on("click", function () {
+        const userId = $(this).data("user-id"); 
+        const isLoggedIn = document.querySelector(".not-logged-in");
+        const productId = $(this).data("product-id"); 
+        const likeButton = $(this);
+        if(!isLoggedIn){
+            console.log("User is logged in. Sending AJAX request...");
+        $.ajax({
+            type: "POST",
+            url: "add_to_favorites.php",
+            data: { user_id: userId, product_id: productId },
+            dataType: "json",
+            success: function (response) {
+                if (response.status === "success") {
+                    var showToast = $("#toastMessage");
+                    showToast.show();
+                    showToast.text(response.message); 
+                    showToast.addClass("success-toast"); 
+                    likeButton.find("i").css({
+                        cursor: 'default',
+                        pointerEvents: 'none',
+                        color: 'var(--heart-color)',
+                        transform: 'scale(1.2)'
+                    });
+                } else {
+                    var showToast = $("#toastMessage");
+                    showToast.text(response.message); 
+                    showToast.addClass("error-toast"); 
+                }
+                setTimeout(function() {
+                    if(showToast){
+                    showToast.hide();
+                    showToast.removeClass("success-toast error-toast");
+                    }
+                }, 3500);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.error("Error: " + textStatus, errorThrown);
+                alert("Lỗi."); 
+            }
+        });
+    } else{
+        showLoginAnnouncement();
+    }
+    });
+});

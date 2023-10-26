@@ -5,7 +5,7 @@
     --btn-bor-color: #787A91;
     --ef-color: #9DB2BF;
     --star-icon: #F6C90E;
-    --trash-color: #ADC4CE;
+    --trash-color: #96B6C5;
     --info-color: #FF6363;
     --star-empty: #9DB2BF;
     --bg-color:#FFDBC3;
@@ -25,6 +25,7 @@
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
     text-decoration: none;
+    list-style: none;
     color: var(--txt-color);
 }
 body{
@@ -73,15 +74,19 @@ body{
     transform: scale(1.1);
     text-shadow: 0 0 1px;
 }
+main{
+    padding: 10px;
+    background-color: var(--section-color);
+}
 .relate-products-container{
     display: grid;
     grid-template-columns: repeat(4, 1fr) ;
+    gap: 2rem;
     width: 90%;
-    padding: 10px;
+    padding: 30px 15px;
     margin: 2rem auto;
     place-items: center;
     border-radius: 10px;
-    background-color: var(--section-color);
 }
 .card{
     overflow: hidden;
@@ -178,27 +183,55 @@ body{
     background-color: var(--btn-hover-color);
     border-color: black;
 }
-.card-body .card-link .btn:hover i {
-    color: var(--trash-color);
-    transform: translateX(2.5px);
-}
-.card-body .card-link .btn:first-of-type:hover i {
+
+.card-body .card-link .btn:first-child:hover i {
     color: var(--info-color);
     transform: scale(1.2);
     text-shadow: 0 0 1px;
 }
-
-
+.card-body .card-link .btn:last-child:hover i {
+    color: var(--trash-color);
+    transform: scale(1.2);
+    text-shadow: 0 0 1px;
+}
 
 .no-related-products{
     grid-column: 2 / 4;
     width: max-content;
 }
 .no-related-products p{
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-style: italic;
     font-weight: 500;
+    opacity: .8;
+}
+.pagination{
+    text-align: center;
+    margin: 1rem 0 2rem 0;
+}
+.pagination .active-page{
+    padding: 5px 8px;
+    font-size: 1;
+    font-weight: 500;
+    margin: 0 8px;
+    border-radius: 3px;
+    background-color: var(--show-color);
+}
+.pagination .nextBtn,
+.pagination .prevBtn{
+    padding: 5px 8px;
+    margin: 0 8px;
+    background-color: var(--ef-color);
+    border: 2px solid var(--btn-bor-color);
+    border-radius: 50%;
     opacity: .7;
+    transition: .3s;
+}
+.pagination .nextBtn:hover,
+.pagination .prevBtn:hover{
+    opacity: 1;
+    border-color: black;
+        
 }
 .success-message{
     display: none;
@@ -215,4 +248,88 @@ body{
     padding: 10px;
     background-color: rgba(199, 0, 57, 0.8);
     box-shadow: rgba(199, 0, 57, 0.8) 0px 7px 29px 0px;
+}
+footer{
+    width: 100%;
+    height: auto;
+    background-color: #DBDFEA;
+    padding: 10px;
+    border-radius: 20px 20px 0 0;
+}
+.footer-container{
+    margin-top: 2rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    width: 100%;
+    column-gap: 10px;
+    margin-bottom: 1rem;
+}
+.box{
+    flex-basis: calc(100%/3);
+    line-height: 2rem;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+.box h2{
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    text-align: center;
+}
+.left p{
+    margin-left: 15px;
+}
+.middle, .right{
+    text-align: center;
+}
+.middle i,
+.right i{
+    margin-right: 5px;
+    
+}
+.social-box{
+    text-transform: capitalize;
+    padding: 10px;
+    text-align: center;
+}
+.social-box h2{
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+.social-box span{
+    padding: 10px;
+    font-size: larger;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 0 10px;
+    transition: 0.5s;
+}
+.social-box span i{
+    transition: 0.5s;
+    font-size: larger;
+}
+.social-box span:hover{
+    background-color: var(--ibg-color);
+}
+.social-box span:hover .fa-facebook,
+.social-box span:hover .fa-twitter{
+    transform: rotate(15deg);
+    color: #1976f0;
+}
+.social-box span:hover .fa-youtube{
+    transform: rotate(15deg);
+    color: red;
+}
+.social-box span:hover .fa-instagram{
+    transform: rotate(15deg);
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    -webkit-background-clip: text;  
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+}
+.social-box span:last-child:hover i{
+    transform: rotate(15deg);
+    color: #111111;
+    filter: drop-shadow(2px 0px 0px #FD3E3E) drop-shadow(-2px -2px 0px #4DE8F4);
 }

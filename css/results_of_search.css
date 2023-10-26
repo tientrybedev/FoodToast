@@ -27,6 +27,7 @@
     font-family: 'Roboto', sans-serif;
     outline: none;
     text-decoration: none;
+    list-style: none;
     color: var(--txt-color);
 }
 body{
@@ -341,3 +342,87 @@ nav a:not(:last-child):hover i{
     box-shadow: rgba(26, 172, 172, 0.8) 0px 7px 29px 0px;
 }
 
+footer{
+    width: 100%;
+    height: auto;
+    background-color: #DBDFEA;
+    padding: 10px;
+    border-radius: 20px 20px 0 0;
+}
+.footer-container{
+    margin-top: 2rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    width: 100%;
+    column-gap: 10px;
+    margin-bottom: 1rem;
+}
+.box{
+    flex-basis: calc(100%/3);
+    line-height: 2rem;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+.box h2{
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    text-align: center;
+}
+.left p{
+    margin-left: 15px;
+}
+.middle, .right{
+    text-align: center;
+}
+.middle i,
+.right i{
+    margin-right: 5px;
+    
+}
+.social-box{
+    text-transform: capitalize;
+    padding: 10px;
+    text-align: center;
+}
+.social-box h2{
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+.social-box span{
+    padding: 10px;
+    font-size: larger;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 0 10px;
+    transition: 0.5s;
+}
+.social-box span i{
+    transition: 0.5s;
+    font-size: larger;
+}
+.social-box span:hover{
+    background-color: var(--ibg-color);
+}
+.social-box span:hover .fa-facebook,
+.social-box span:hover .fa-twitter{
+    transform: rotate(15deg);
+    color: #1976f0;
+}
+.social-box span:hover .fa-youtube{
+    transform: rotate(15deg);
+    color: red;
+}
+.social-box span:hover .fa-instagram{
+    transform: rotate(15deg);
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    -webkit-background-clip: text;  
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+}
+.social-box span:last-child:hover i{
+    transform: rotate(15deg);
+    color: #111111;
+    filter: drop-shadow(2px 0px 0px #FD3E3E) drop-shadow(-2px -2px 0px #4DE8F4);
+}
