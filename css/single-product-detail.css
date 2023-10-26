@@ -80,7 +80,7 @@ body{
 }
 .card .return-menu i{
     font-size: 1.05rem;
-    margin-right: 12px;
+    margin-right: 7px;
     transition: .3s;
 }
 .card .return-menu a:hover{

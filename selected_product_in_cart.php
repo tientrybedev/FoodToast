@@ -1,11 +1,11 @@
 <?php
-include("connect.php"); // Include your database connection code here
+include("connect.php"); 
 session_start();
 
 if (isset($_SESSION['user_id']) && isset($_POST['product_id']) && isset($_POST['checked'])) {
     $user_id = $_SESSION['user_id'];
     $product_id = $_POST['product_id'];
-    $isChecked = $_POST['checked']; // Retrieve the "checked" status
+    $isChecked = $_POST['checked']; 
 
     $sqlUpdateCheckbox = "UPDATE cart SET selected = ? WHERE user_id = ? AND product_id = ?";
     $stmtUpdateCheckbox = $conn->prepare($sqlUpdateCheckbox);

@@ -24,11 +24,9 @@ function increaseQuantity(productId) {
     updateQuantity(productId, "increase");
 }
 
-// Function to handle decreasing quantity
 function decreaseQuantity(productId) {
     updateQuantity(productId, "decrease");
 }
-// Function to update quantity and refresh the cart
 function updateQuantity(productId, action) {
     let url;
     if (action === "increase") {
@@ -43,10 +41,8 @@ function updateQuantity(productId, action) {
         data: {product_id: productId},
         success: function(response) {
             if (response === "Quantity updated successfully!") {
-                // Reload the cart content to reflect the updated quantities
                 loadCart();
             } else {
-                // Handle the error
                 alert(response);
             }
         }
@@ -57,19 +53,15 @@ $(".delete").on("click", function() {
     const productId = $(this).data("product-id");
     deleteProduct(productId);
 });
-// Function to delete a product and refresh the cart
 function deleteProduct(productId) {
     $.ajax({
         type: "POST",
-        url: "delete_product_in_cart.php", // Create this PHP script to handle product deletion
+        url: "delete_product_in_cart.php", 
         data: { product_id: productId },
         success: function(response) {
-            // Check the response for success or error messages
             if (response === "Product removed from cart!") {
-                // Reload the cart content to reflect the removed product
                 loadCart();
             } else {
-                // Handle the error
                 alert(response);
             }
         }
@@ -80,7 +72,6 @@ function deleteProduct(productId) {
 $(".product-checkbox").on("change", function() {
     const productId = $(this).data("product-id");
     const isChecked = $(this).is(":checked");
-
     $.ajax({
         type: "POST",
         url: "selected_product_in_cart.php", // Create this PHP script to handle the update
@@ -120,11 +111,16 @@ function updateOverallTotal() {
     } else {
     $("#checked-total").text("Tổng tiền: " + selectedTotal.toFixed(3) + " VNĐ");
     }
-    // Attach the click event handler for the final payment
-    $(".final-payment").off("click"); // Remove any existing click handlers
+    $(".final-payment").off("click"); 
     $(".final-payment").on("click", function() {
         if (selectedProducts.length === 0) {
             toast.textContent = "Vui lòng chọn sản phẩm trước khi thanh toán.";
+            $("#checked-total").addClass("shake-animation")
+            
+            setTimeout(function () {
+                toast.style.display = "block";
+                $("#checked-total").removeClass("shake-animation")
+            }, 500);
             setTimeout(function () {
                 toast.style.display = "block";
             }, 100);
@@ -134,7 +130,6 @@ function updateOverallTotal() {
                 toast.style.display = "none";
             }, 3000); 
         } else {
-            
         const selectedProductData = selectedProducts.map(product => `${product.id}:${product.quantity}:${product.price}:${product.subtotal}`).join(',');
         window.location.href = 'payment.php?selectedProducts=' + selectedProductData;
         }
@@ -142,9 +137,7 @@ function updateOverallTotal() {
 }
 
 $(document).ready(function() {
-    // Attach a change event to the product checkboxes
     $(".product-checkbox").on("change", updateOverallTotal);
-    // Initial update
     updateOverallTotal();
 });
     // Wait for the page to load

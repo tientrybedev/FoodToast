@@ -498,6 +498,8 @@ body{
 }
 .favorite:hover,
 .user-detail-btn:hover{
+    opacity: 1;
+    text-shadow: 0 0 1px;
     border-bottom: 2px solid black;
 }
 .avatar-img{

@@ -42,6 +42,10 @@ body{
     transform: translateX(-50%); 
     border-radius: 10px;
     z-index: 4;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: white;
+    text-shadow: 0 0 1px;
     padding: 10px;
     background-color: rgba(199, 0, 57, 0.8);
     box-shadow: rgba(199, 0, 57, 0.8) 0px 7px 29px 0px;
@@ -369,4 +373,11 @@ body{
     stroke-dashoffset: 0;
 }
 
-
+.shake-animation{
+    animation: .5s shake-and-red 2;
+}
+@keyframes shake-and-red {
+    0%, 100% { transform: translateX(0); color: red; text-shadow: 0 0 1px; }
+    25% { transform: translateX(-5px); color: red; text-shadow: 0 0 1px; }
+    75% { transform: translateX(5px); color: red; text-shadow: 0 0 1px; }
+}
