@@ -35,7 +35,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="toast" id="toastMessage"></div>
         <div class="cart" id="cart" >
             <div class="turn-back-links">
-                <a href="javascript:history.go(-1)">Quay lại </a>
+                <a href="javascript:history.go(-1)">Quay về </a>
                 <a href="index.php" >Trang chủ</a>
                 <a href="produces-page.php">Menu</a>
             </div>

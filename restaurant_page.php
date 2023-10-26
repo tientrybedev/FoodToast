@@ -30,6 +30,7 @@ $res_result = $conn->query($restaurantSql);
 <body>
     <nav>
         <div class="return_links">
+            <a href="javascript:history.go(-1)"><i class="fa-solid fa-rotate-left"></i> Quay về </a>
             <a href="index.php"><i class="fa-solid fa-house"></i> Trang chủ</a>
             <a href="produces-page.php"><i class="fa-solid fa-clipboard-list"></i> Menus</a>
         </div>
