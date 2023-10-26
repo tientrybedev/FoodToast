@@ -54,17 +54,17 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                 <div class="advertise-section">
                     <div class="ad-container">
                         <div class="logo">
-                            <img src="Login-img/logo-FT-AD.png" alt="">
+                            <img src="Home-img/logo-FT-AD.png" alt="">
                         </div>   
                         <div class="aditem_ad">
                             <div class="aditem">
-                                <img src="Login-img/ad4.jpg" alt="">
+                                <img src="Home-img/ad4.jpg" alt="">
                             </div>   
                             <div class="aditem">
-                                <img src="Login-img/ad3.jpg" alt="">
+                                <img src="Home-img/ad3.jpg" alt="">
                             </div>   
                             <div class="aditem">
-                                <img src="Login-img/ad5.jpg" alt="">
+                                <img src="Home-img/ad5.jpg" alt="">
                             </div>   
                         </div>
                     </div>

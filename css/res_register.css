@@ -11,7 +11,7 @@
 body{
     width: 100%;
     min-height: 100vh;
-    background: url(../Login-img/res_reg_bg.jpg) no-repeat;
+    background: url(../Home-img/res_reg_bg.jpg) no-repeat;
     background-size: cover;
     background-position: center;
     overflow: hidden;

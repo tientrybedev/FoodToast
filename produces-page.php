@@ -436,7 +436,7 @@ if ($drinkResult->num_rows === 0) {
                 </li>
                 <li class="guest-card">
                     <div class="guest-img">
-                        <img src="products-img/rice1.png" alt="img" draggable="false"></div>
+                        <img src="Home-img/rice1.png" alt="img" draggable="false"></div>
                         <div class="guest-comment">
                             <h2>Cơm gà</h2>
                         </div>
@@ -530,7 +530,7 @@ if ($drinkResult->num_rows === 0) {
 
         $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
         $stmt = $conn->prepare($alreadyFavorSql);
-        $stmt->bind_param("is", $user_id, $pro_id); // Assuming $user_id is set elsewhere
+        $stmt->bind_param("is", $user_id, $pro_id); 
         $stmt->execute();
         $result = $stmt->get_result();
         $isFavorited = $result->num_rows > 0;

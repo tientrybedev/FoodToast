@@ -35,6 +35,11 @@ if (mysqli_num_rows($result) > 0) {
         echo'<div class="price"> <p>Giá:<p> <strong>' . $search_product_price . '</strong></div>';
         echo'<div class="card-link">';
         echo '<a href="Single-product-detail.php?product_id=' .$search_product_ID . '" class="btn">Tìm hiểu thêm<i class="fa-solid fa-circle-question"></i></a>';
+        if($isUserLoggedIn){
+        echo '<button class="addToCart btn" data-product-id="' . $search_product_ID . '">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';
+        }else{
+            echo '<button class="addToCart btn" onclick="showLoginAnnouncement(event)" >Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';
+        }
         echo '</div>';
         echo '</div>';
         echo '</div>';

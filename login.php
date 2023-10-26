@@ -50,7 +50,7 @@ $conn->close();
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="Login-img/food-logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="Home-img/food-logo.png" type="image/x-icon">
     <script src="https://unpkg.com/scrollreveal"></script>
     <title>Login</title>
 </head>
@@ -64,10 +64,10 @@ $conn->close();
                 </div>
                 <div class="slider-container">
                     <div class="slide">
-                        <img src="Login-img/ManySpe.png" alt="">
-                        <img src="Login-img/FastDe.png" alt="">
-                        <img src="Login-img/BestPri.png" alt="">
-                        <img src="Login-img/Manyopts.png" alt="">
+                        <img src="Home-img/ManySpe.png" alt="">
+                        <img src="Home-img/FastDe.png" alt="">
+                        <img src="Home-img/BestPri.png" alt="">
+                        <img src="Home-img/Manyopts.png" alt="">
                     </div>
                 </div>
                 <div class="log-txt1">

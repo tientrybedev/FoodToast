@@ -32,7 +32,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
             $relateResPro .= '<form action="delete_from_favorite.php" method="post">';
             $relateResPro .= '<input type="hidden" name="product_id" value="' . $product_id . '">';
             $relateResPro .= '<input type="hidden" name="user_id" value="' . $user_id . '">';
-            $relateResPro .= '<button type="submit" name="delete" class="deleteFavoriteProduct btn">Xóa khỏi yêu thích</button>';
+            $relateResPro .= '<button type="submit" name="delete" class="deleteFavoriteProduct btn">Xóa khỏi yêu thích <i class="fa-solid fa-trash"></i></button>';
             $relateResPro .= '</form>';
             
             
@@ -83,11 +83,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var notification = document.getElementById('notification');
 
     <?php if (isset($successMessage)) { ?>
-        // Display the success message
         notification.innerText = '<?php echo $successMessage; ?>';
         notification.style.display = 'block';
-
-        // Hide the message after 3 seconds
         setTimeout(function () {
             notification.style.display = 'none';
         }, 3000);

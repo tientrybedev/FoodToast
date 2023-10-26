@@ -176,13 +176,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="advertise">
         <div class="item item1">
-            <img src="Login-img/logo-FT-AD.png" alt="">
+            <img src="Home-img/logo-FT-AD.png" alt="">
         </div>
         <div class="item item2">
-            <img src="Login-img/ad1.jpg" alt="">
+            <img src="Home-img/ad1.jpg" alt="">
         </div>
         <div class="item item3">
-            <img src="Login-img/ad2.jpg" alt="">
+            <img src="Home-img/ad2.jpg" alt="">
         </div>
     </div>
     </div>

@@ -100,6 +100,6 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" ></script> 
-    <script src="cart.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 </html> 

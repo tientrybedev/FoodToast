@@ -49,13 +49,13 @@ if ($isUserLoggedIn) {
     <div class="loader-container">
         <div class="waiting-img">
             <div class="waiting-card">
-                <img src="loading-img/wp1.png" alt="">
+                <img src="Home-img/wp1.png" alt="">
             </div>
             <div class="waiting-card">
-                <img src="loading-img/wp2.png" alt="">
+                <img src="Home-img/wp2.png" alt="">
             </div>
             <div class="waiting-card">
-                <img src="loading-img/wp3.png" alt="">
+                <img src="Home-img/wp3.png" alt="">
             </div>
         </div>
         <div class="loader">

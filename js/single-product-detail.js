@@ -169,7 +169,7 @@ $(document).ready(function () {
                 } 
                 setTimeout(function () {
                     showAnnounce.hide();
-                    showAnnounce.removeClass("success-announce"); // Remove styling classes
+                    showAnnounce.removeClass("success-announce"); 
                 }, 3500);
                 updateCartBadge(); 
             }
@@ -179,6 +179,7 @@ $(document).ready(function () {
     updateCartBadge();
 });
 function showLoginAnnouncement(event) {
+    if(event){
     event.preventDefault();
     var showToast = $('#cartAnnounce');
     showToast.show();
@@ -187,4 +188,102 @@ function showLoginAnnouncement(event) {
     setTimeout(function() {
         showToast.hide();
     }, 4000);
+}else{
+    var showToast = $('#cartAnnounce');
+    showToast.show();
+    showToast.addClass('announce');
+    showToast.text("Bạn Chưa Đăng Nhập");
+    setTimeout(function() {
+        showToast.hide();
+    }, 4000);
 }
+}
+
+// $(document).ready(function () {
+//     $(".addToFavor, .like").on("click", function () {
+//         const userId = $(this).data("user-id"); 
+//         const isLoggedIn = document.querySelector(".not-logged-in");
+//         const productId = $(this).data("product-id"); 
+//         const likeButton = $(this);
+//         if(!isLoggedIn){
+//         $.ajax({
+//             type: "POST",
+//             url: "add_to_favorites.php",
+//             data: { user_id: userId, product_id: productId },
+//             dataType: "json",
+//             success: function (response) {
+//                 if (response.status === "success") {
+//                     var showToast = $("#cartAnnounce");
+//                     showToast.show();
+//                     showToast.text(response.message); 
+//                     showToast.addClass("success-announce"); 
+//                     likeButton.find("i").css({
+//                         pointerEvents: 'none',
+//                         color: 'var(--heart-color)',
+//                         transform: 'scale(1.2)'
+//                     });
+//                 }
+//                 setTimeout(function() {
+//                     showToast.hide();
+//                     showToast.removeClass("success-toast");
+//                 }, 3500);
+//             },
+//             error: function (xhr, textStatus, errorThrown) {
+//                 console.error("Error: " + textStatus, errorThrown);
+//                 alert("Lỗi."); 
+//             }
+//         });
+//     } else{
+//         showLoginAnnouncement();
+//     }
+//     });
+// });
+
+
+$(document).ready(function () {
+    $(".addToFavor, .like").on("click", function () {
+        const userId = $(this).data("user-id");
+        const isLoggedIn = document.querySelector(".not-logged-in");
+        const productId = $(this).data("product-id");
+        const likeButton = $(this);
+
+        console.log("Clicked element:", this); // Check if the correct element is being clicked
+
+        if (!isLoggedIn) {
+            $.ajax({
+                type: "POST",
+                url: "add_to_favorites.php",
+                data: { user_id: userId, product_id: productId },
+                dataType: "json",
+                success: function (response) {
+                    console.log("Ajax response:", response); // Check the response from the server
+
+                    if (response.status === "success") {
+                        var showToast = $("#cartAnnounce");
+                        showToast.show();
+                        showToast.text(response.message);
+                        showToast.addClass("success-announce");
+
+                        console.log("Like button:", likeButton); // Check the 'likeButton' variable
+
+                        likeButton.find("i").css({
+                            pointerEvents: 'none',
+                            color: 'var(--heart-color)',
+                            transform: 'scale(1.2)'
+                        });
+                    }
+                    setTimeout(function () {
+                        showToast.hide();
+                        showToast.removeClass("success-toast");
+                    }, 3500);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error("Error: " + textStatus, errorThrown);
+                    alert("Lỗi.");
+                }
+            });
+        } else {
+            showLoginAnnouncement();
+        }
+    });
+});

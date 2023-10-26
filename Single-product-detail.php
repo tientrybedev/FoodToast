@@ -14,6 +14,13 @@ if (isset($_GET['product_id'])) {
     $stmt->bind_param("s", $product_id); 
     $stmt->execute();
     $result = $stmt->get_result();
+
+    $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
+    $stmt = $conn->prepare($alreadyFavorSql);
+    $stmt->bind_param("is", $user_id, $product_id); 
+    $stmt->execute();
+    $favorResult = $stmt->get_result();
+    $isFavorited = $favorResult->num_rows > 0;
     
     if ($result->num_rows ===1) {
         $row = $result->fetch_assoc();
@@ -96,7 +103,11 @@ if (isset($_GET['product_id'])) {
         $related_product_img = $related_row['image_1'];
 
         $relateResPro .='<div class="card">';
-        $relateResPro .='<div class="like"><i class="fa-solid fa-heart" title="Yêu thích"></i></div>';
+        if(isset($user_id)){
+        $relateResPro .= '<div class="like" data-user-id="' . $user_id . '" data-product-id="' . $related_product_ID . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
+        }else{
+        $relateResPro .= '<div class="like not-logged-in" data-user-id="' . $user_id . '" data-product-id="' . $related_product_ID . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
+        }
         $relateResPro .='<div class="fpic-container">';
         $relateResPro .='<img src="' . $related_product_img  . '" class="card-img-top" alt="' . $related_product_name . '">';
         $relateResPro .= '</div>';
@@ -341,10 +352,11 @@ if (isset($_GET['product_id'])) {
                             echo '<div class="buy-btn">';
                             if(isset($user_id)){
                                 echo '<button class="addToCart btn" data-product-id="' . $product_id . '">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';
+                                echo '<div class="addToFavor btn" data-user-id="' . $user_id . '" data-product-id="' . $product_id . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
                             }else{
                                 echo '<button class="addToCart btn" onclick="showLoginAnnouncement(event)">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';
+                                echo '<div class="addToFavor btn not-logged-in" data-user-id="' . $user_id . '" data-product-id="' . $product_id . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
                             }
-                            echo '<button type="button" class="btn"><i class="fa-solid fa-heart"></i></button>';
                             echo '</div>';
                             echo '</div>';
                         }
