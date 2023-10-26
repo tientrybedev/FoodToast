@@ -5,7 +5,6 @@ session_start();
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 
-    // Select all products in the cart for the current user
     $sqlCart = "SELECT c.*, p.name AS product_name, p.image_1 FROM cart c
     JOIN products p ON c.product_id = p.product_id
     WHERE c.user_id = ?";
@@ -13,7 +12,6 @@ if (isset($_SESSION['user_id'])) {
     $stmtCart->bind_param("i", $user_id); 
     $stmtCart->execute();
     $resultCart = $stmtCart->get_result();
-
     $stmtCart->close();
 }
 
