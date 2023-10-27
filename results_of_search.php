@@ -1,6 +1,7 @@
 <?php 
 include("connect.php");
 session_start();
+
 if (isset($_GET['search-query'])) {
     $query = $_GET['search-query'];
     $sql = "SELECT * FROM products WHERE name LIKE '%$query%'";

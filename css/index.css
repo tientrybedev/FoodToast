@@ -1657,6 +1657,7 @@ footer{
 }
 .service-content .cards{
     flex-direction: column;
+    gap: 10px;
 }
 .footer-container{
     padding: 5px 1px;
@@ -1694,6 +1695,19 @@ footer{
 }
 }
 
+@media screen and (max-width:740px) {
+    .special-contain{
+        grid-template-columns: 1fr;
+    }
+    .info-btn, .into-cart-btn {
+        padding: 20px;
+    }
+    .intro-content{
+        flex-direction: column;
+        padding: 0;
+        gap: 15px
+    }
+}
 @media screen and (max-width:500px) {
     .top-content h1{
         font-size: 30px;

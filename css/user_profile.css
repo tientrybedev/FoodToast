@@ -21,6 +21,26 @@ body{
     min-height: 100vh;
     background-color: var(--bg-color);
 }
+body::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: transparent;
+}
+
+body::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: transparent
+    ;
+}
+
+body::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: lightgray;
+}
 .all{
     margin-top: 5rem;
     display: flex;
@@ -401,25 +421,46 @@ body{
     opacity: 1;
     letter-spacing: 1px;
 }
-
-.history-section{
+.history{
     text-align: center;
-    border: 2px solid black;
     padding: 5px;
 }
-.history-section h2{
+.history h3{
+    width: fit-content;
+    font-size: 1.8rem;
+    border-radius: 10px;
+    margin: 1.5rem auto;
+    padding: 5px 8px;
+    background-color: var(--title-header-color);
+    box-shadow: var(--title-shadow);
+}
+.detail-history{
+    padding: 10px;
+    border: 2px solid black;
+}
+.detail-history table{
+    padding: 5px;
+    border-radius: 8px;
+    background-color: #91C8E4;
+}
+.detail-history h3{
+    width: max-content;
     text-transform: capitalize;
     letter-spacing: 1px;
 }
-.history-section th{
+.detail-history th{
     margin: 5px;
     padding: 5px 8px;
     text-transform: capitalize;
 }
-.history-section th, td{
-    border: 1px solid;
-    margin: 5px;
-    padding: 5px 8px;
+
+.detail-history td{
+    text-align: center;
+    border: 2px solid black;
+    background-color: #B2C8BA;
+    padding: 5px;
+    text-shadow: 0 0 1px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 
@@ -480,4 +521,23 @@ body{
     padding: 15px;
     margin:  3rem auto;
     border: 2px solid black;
+}
+.detail-history::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: transparent;
+}
+
+.detail-history::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: transparent;
+}
+
+.detail-history::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: lightgray;
 }

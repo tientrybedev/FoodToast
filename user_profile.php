@@ -4,15 +4,16 @@ include("connect.php");
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $user_id = $_SESSION['user_id'];
     $historysql = "SELECT 
-    od.product_id, od.quantity, od.subtotal, od.order_status,
-    o.order_id, o.order_date, o.total_price,
-    p.final_payment, pd.payment_type, pd.delivery_cost
-FROM orders o
-JOIN order_details od ON o.order_id = od.order_id
-JOIN payment p ON o.order_id = p.order_id
-JOIN payment_details pd ON p.payment_id = pd.payment_id
-WHERE o.user_id = $user_id";
-$result = mysqli_query($conn, $historysql);
+        od.product_id, od.quantity, od.subtotal, od.order_status, od.show_time,
+        o.order_id, o.order_date, o.total_price,
+        p.final_payment, pd.payment_type, pd.delivery_cost
+    FROM orders o
+    JOIN order_details od ON o.order_id = od.order_id
+    JOIN payment p ON o.order_id = p.order_id
+    JOIN payment_details pd ON p.payment_id = pd.payment_id
+    WHERE o.user_id = $user_id";
+    $result = mysqli_query($conn, $historysql);
+    
 
     $sql = "SELECT * FROM users WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
@@ -135,10 +136,10 @@ $result = mysqli_query($conn, $historysql);
         
     </div>
     <div class="history">
+        <h3>Theo dõi đơn hàng</h3>
         <div class="detail-history">
             
 <?php
-
 echo '<table>';
 echo '<thead>';
 echo '<tr>';
@@ -146,59 +147,75 @@ echo '<th>Mã đơn hàng</th>';
 echo '<th>Mã sản phẩm</th>';
 echo '<th>Số lượng</th>';
 echo '<th>Tổng tiền sản phẩm</th>';
-echo '<th>Tổng tiền đơn hàng</th>';
 echo '<th>Trạng thái đơn hàng</th>';
-echo '<th>Phí vận chuyển</th>';
-echo '<th>Phương thức thanh toán</th>';
-echo '<th>Ngày đặt đơn</th>';
+echo '<th>Ngày cập nhật</th>';
 echo '</tr>';
 echo '</thead>';
 echo '<tbody>';
+$previousOrderId = null; 
 while ($row = mysqli_fetch_assoc($result)) {
     echo '<tr>';
-    echo '<td>' . $row['order_id'] . '</td>';
-    echo '<td>' . $row['product_id'] . '</td>';
-    echo '<td>' . $row['quantity'] . '</td>';
-    echo '<td>' . $row['subtotal'] . '</td>';
-    echo '<td>' . $row['total_price'] . '</td>';
-    switch ($row['order_status']) {
-        case 'Pending':
-            $statusText = 'Đang chờ';
-            break;
-        case 'Processing':
-            $statusText = 'Đang xử lý';
-            break;
-        case 'Delivering':
-            $statusText = 'Đang giao';
-            break;
-        case 'Finished':
-            $statusText = 'Hoàn thành';
-            break;
-        default:
-            $statusText = $row['order_status'];
+    if ($previousOrderId !== $row['order_id']) {
+        echo '<td>' . $row['order_id'] . '</td>';
+        echo '<td>' . $row['product_id'] . '</td>';
+        echo '<td>' . $row['quantity'] . '</td>';
+        echo '<td>' . $row['subtotal'] . '</td>';
+        switch ($row['order_status']) {
+            case 'Pending':
+                $statusText = 'Đang chờ';
+                break;
+            case 'Processing':
+                $statusText = 'Đang xử lý';
+                break;
+            case 'Delivering':
+                $statusText = 'Đang giao';
+                break;
+            case 'Finished':
+                $statusText = 'Hoàn thành';
+                break;
+            default:
+                $statusText = $row['order_status'];
+        }
+        
+        echo '<td>' . $statusText . '</td>';
+        echo '<td>' . $row['show_time'] . '</td>';
+        $previousOrderId = $row['order_id'];
+    } else {
+        echo '<td></td>';
+        echo '<td>' . $row['product_id'] . '</td>';
+        echo '<td>' . $row['quantity'] . '</td>';
+        echo '<td>' . $row['subtotal'] . '</td>';
+        
+        // Add the switch statement for order_status
+        switch ($row['order_status']) {
+            case 'Pending':
+                $statusText = 'Đang chờ';
+                break;
+            case 'Processing':
+                $statusText = 'Đang xử lý';
+                break;
+            case 'Delivering':
+                $statusText = 'Đang giao';
+                break;
+            case 'Finished':
+                $statusText = 'Hoàn thành';
+                break;
+            default:
+                $statusText = $row['order_status'];
+        }
+        
+        echo '<td>' . $statusText . '</td>';
+        echo '<td>' . $row['show_time'] . '</td>';
     }
-    switch ($row['payment_type']) {
-        case 'Cash':
-            $payText = 'Tiền mặt';
-            break;
-        case 'Banking':
-            $payText = 'Chuyển khoản';
-            break;
-        default:
-            $payText = $row['payment_type'];
-    }
-    echo '<td>' . $statusText . '</td>';
-    echo '<td>' . $row['delivery_cost'] . '</td>';
-    echo '<td>' . $payText . '</td>';
-    echo '<td>' . $row['order_date'] . '</td>';
-    echo '</tr>';
 }
 echo '</tbody>';
 echo '</table>';
 ?>
+
 </div>
-    </div>
-    <div class="total">   
+
+?>
+
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="js/user_profile.js"></script>
