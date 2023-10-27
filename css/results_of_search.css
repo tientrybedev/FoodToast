@@ -317,7 +317,8 @@ nav a:not(:last-child):hover i{
 .toast{
     display: none;
     position: fixed;
-    top: 3%;
+    padding: 5px;
+    top: 4%;
     left: 50%; 
     transform: translate(-50%, -50%); 
     background-color: rgba(199, 0, 57, 0.8);
@@ -334,7 +335,7 @@ nav a:not(:last-child):hover i{
     background-color: #9DB2BF;
     color: var(--txt-color);
     text-shadow: 0 0 1px;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .success-toast {

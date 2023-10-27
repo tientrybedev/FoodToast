@@ -1,7 +1,7 @@
 <?php 
 include("connect.php");
+$isUserLoggedIn = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 session_start();
-
 if (isset($_GET['search-query'])) {
     $query = $_GET['search-query'];
     $sql = "SELECT * FROM products WHERE name LIKE '%$query%'";
@@ -31,7 +31,11 @@ if (isset($_GET['search-query'])) {
     <nav>
         <a href="index.php"><i class="fa-solid fa-house"></i> Trang chủ</a>
         <a href="produces-page.php"><i class="fa-solid fa-clipboard-list"></i> Menus</a>
-        <a href="cart.php" class="cart-link"><i class="fa-solid fa-bag-shopping"></i> Giỏ hàng <span id="cartBadge" class="badge"></span></a>
+        <?php if($isUserLoggedIn): ?>
+                            <a href="cart.php" class="cart-link"><i class="fa-solid fa-bag-shopping"></i> Giỏ hàng <span id="cartBadge" class="badge"></span></a> 
+                        <?php else: ?>
+                            <a href="cart.php" class="cart-link" onclick="showLoginAnnouncement(event)"><i class="fa-solid fa-bag-shopping"></i> Giỏ hàng <span id="cartBadge" class="badge"></span></a> 
+                        <?php endif; ?>
         <div class="search" >
             <form action="results_of_search.php" method="get" class="product-search-form" id="productSearchForm">
             <input type="text" id="searchInput" name="search-query"  placeholder="Tìm kiếm sản phẩm" autocomplete="off"  onkeyup="liveSearch(this.value);">

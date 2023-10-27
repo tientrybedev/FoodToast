@@ -50,7 +50,9 @@ $(document).ready(function() {
     updateCartBadge();
 });
 
-function showLoginAnnouncement() {
+function showLoginAnnouncement(event) {
+    if(event){
+    event.preventDefault();
     var showToast = $('#toastMessage');
     showToast.show();
     showToast.addClass('announce');
@@ -58,4 +60,13 @@ function showLoginAnnouncement() {
     setTimeout(function() {
         showToast.hide();
     }, 4000);
+}else{
+    var showToast = $('#toastMessage');
+    showToast.show();
+    showToast.addClass('announce');
+    showToast.text("Bạn Chưa Đăng Nhập");
+    setTimeout(function() {
+        showToast.hide();
+    }, 4000);
+}
 }
