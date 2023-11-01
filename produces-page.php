@@ -219,22 +219,23 @@ if ($drinkResult->num_rows === 0) {
                 <span class="line2"></span>
                 <span class="line3"></span>
             </div>
-            
+        </div>  
+        <div class="hidden_search">
+            <div class="search">
+                <form action="results_of_search.php" method="get">
+                    <input type="text" id="searchInput" name="search-query"  placeholder="Tìm kiếm sản phẩm" autocomplete="off"  onkeyup="liveSearch(this.value);">
+                    <div class="category-search"><a href="advance_search.php"><i class="fa-solid fa-sliders"></a></i></div>
+                    <button class="sear-btn" type="submit"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
+                </form>
+            </div>
         </div>
         <div class="hidden-bar">
-                <div class="hidden-bar-links">
-                        <a href="index.php" ><li>Trang chủ</li></a>
-                        <a href="#" class="menu-active"><li>Menu</li></a>
-                        <a href="restaurant_page.php" ><li>Nhà hàng</li></a>
+            <div class="hidden-bar-links">
+                <a href="index.php" ><li>Trang chủ</li></a>
+                <a href="#" class="menu-active"><li>Menu</li></a>
+                <a href="restaurant_page.php" ><li>Nhà hàng</li></a>
             </div>
             <div class="hidden-bar-function">
-            <div class="search">
-                        <form action="results_of_search.php" method="get">
-                            <input type="text" id="searchInput" name="search-query"  placeholder="Tìm kiếm sản phẩm" autocomplete="off"  onkeyup="liveSearch(this.value);">
-                            <div class="category-search"><a href="advance_search.php"><i class="fa-solid fa-sliders"></a></i></div>
-                            <button class="sear-btn" type="submit"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
-                        </form>
-                    </div>
                     <div class="btn-login">
                         <div class="btn-login-container">
                             <div class="btn-login-content">
@@ -254,6 +255,13 @@ if ($drinkResult->num_rows === 0) {
                         <?php else: ?>
                             <a href="cart.php" onclick="showLoginAnnouncement(event)"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
                             <span id="hidden-cartBadge" class="badge"></span> 
+                        <?php endif; ?>
+                    </div>
+                    <div class="favor">
+                    <?php if($isUserLoggedIn): ?>
+                            <a href="favor.php"><i class="fa-solid fa-heart fa-lg"></i></i></a>
+                        <?php else: ?>
+                            <a href="favor.php" onclick="showLoginAnnouncement(event)"><i class="fa-solid fa-heart fa-lg"></i></a>
                         <?php endif; ?>
                     </div>
             </div>
@@ -376,7 +384,23 @@ if ($drinkResult->num_rows === 0) {
         $pro_img=$row['image_1'];
         $pro_name=$row['name'];
         $pro_price=$row['price'];
-
+        $queryStarRatingSql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE product_id = ?";
+        $stmtdDisplayRating = mysqli_prepare($conn, $queryStarRatingSql);
+        if ($stmtdDisplayRating) {
+            mysqli_stmt_bind_param($stmtdDisplayRating, 's', $row["product_id"]);
+            mysqli_stmt_execute($stmtdDisplayRating);
+            mysqli_stmt_bind_result($stmtdDisplayRating, $avgRating);
+            mysqli_stmt_fetch($stmtdDisplayRating);
+            $roundedAvgRating = round($avgRating);
+            $userRatingDisplay = '';
+            for ($i = 1; $i <= 5; $i++) {
+            $starDisplayClass = ($i <= $roundedAvgRating) ? 'star-filled' : 'star-empty';
+            $userRatingDisplay .= '<span><i class="fa fa-star ' . $starDisplayClass . '"></i></span>';
+        }
+            mysqli_stmt_close($stmtdDisplayRating);
+        } else {
+            echo "Error preparing the statement.";
+        }
         $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
         $stmt = $conn->prepare($alreadyFavorSql);
         $stmt->bind_param("is", $user_id, $pro_id); 
@@ -398,7 +422,7 @@ if ($drinkResult->num_rows === 0) {
                 <h3 class="card-title"><?php echo $pro_name; ?></h3>
                 <div class="rate">
                     <p>Đánh Giá:</p>
-                    <!-- Add star ratings here -->
+                    <?php echo $userRatingDisplay ?>
                 </div>
                 <div class="price">
                     <p>Giá:<p> <strong><?php echo $pro_price; ?> VNĐ</strong>
@@ -437,7 +461,23 @@ if ($drinkResult->num_rows === 0) {
         $pro_img=$row['image_1'];
         $pro_name=$row['name'];
         $pro_price=$row['price'];
-
+        $queryStarRatingSql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE product_id = ?";
+        $stmtdDisplayRating = mysqli_prepare($conn, $queryStarRatingSql);
+        if ($stmtdDisplayRating) {
+            mysqli_stmt_bind_param($stmtdDisplayRating, 's', $row["product_id"]);
+            mysqli_stmt_execute($stmtdDisplayRating);
+            mysqli_stmt_bind_result($stmtdDisplayRating, $avgRating);
+            mysqli_stmt_fetch($stmtdDisplayRating);
+            $roundedAvgRating = round($avgRating);
+            $userRatingDisplay = '';
+            for ($i = 1; $i <= 5; $i++) {
+            $starDisplayClass = ($i <= $roundedAvgRating) ? 'star-filled' : 'star-empty';
+            $userRatingDisplay .= '<span><i class="fa fa-star ' . $starDisplayClass . '"></i></span>';
+        }
+            mysqli_stmt_close($stmtdDisplayRating);
+        } else {
+            echo "Error preparing the statement.";
+        }
         $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
         $stmt = $conn->prepare($alreadyFavorSql);
         $stmt->bind_param("is", $user_id, $pro_id); // Assuming $user_id is set elsewhere
@@ -459,7 +499,7 @@ if ($drinkResult->num_rows === 0) {
                 <h3 class="card-title"><?php echo $row['name']; ?></h3>
                 <div class="rate">
                     <p>Đánh Giá:</p>
-                    <!-- Add star ratings here -->
+                    <?php echo $userRatingDisplay; ?>
                 </div>
                 <div class="price">
                     <p>Giá:<p> <strong><?php echo $row['price']; ?> VNĐ</strong>
@@ -497,7 +537,23 @@ if ($drinkResult->num_rows === 0) {
         $pro_img=$row['image_1'];
         $pro_name=$row['name'];
         $pro_price=$row['price'];
-
+        $queryStarRatingSql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE product_id = ?";
+        $stmtdDisplayRating = mysqli_prepare($conn, $queryStarRatingSql);
+        if ($stmtdDisplayRating) {
+            mysqli_stmt_bind_param($stmtdDisplayRating, 's', $row["product_id"]);
+            mysqli_stmt_execute($stmtdDisplayRating);
+            mysqli_stmt_bind_result($stmtdDisplayRating, $avgRating);
+            mysqli_stmt_fetch($stmtdDisplayRating);
+            $roundedAvgRating = round($avgRating);
+            $userRatingDisplay = '';
+            for ($i = 1; $i <= 5; $i++) {
+            $starDisplayClass = ($i <= $roundedAvgRating) ? 'star-filled' : 'star-empty';
+            $userRatingDisplay .= '<span><i class="fa fa-star ' . $starDisplayClass . '"></i></span>';
+        }
+            mysqli_stmt_close($stmtdDisplayRating);
+        } else {
+            echo "Error preparing the statement.";
+        }
         $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
         $stmt = $conn->prepare($alreadyFavorSql);
         $stmt->bind_param("is", $user_id, $pro_id); // Assuming $user_id is set elsewhere
@@ -519,7 +575,7 @@ if ($drinkResult->num_rows === 0) {
                 <h3 class="card-title"><?php echo $row['name']; ?></h3>
                 <div class="rate">
                     <p>Đánh Giá:</p>
-                    <!-- Add star ratings here -->
+                    <?php echo $userRatingDisplay; ?>
                 </div>
                 <div class="price">
                     <p>Giá:<p> <strong><?php echo $row['price']; ?> VNĐ</strong>
@@ -557,7 +613,23 @@ if ($drinkResult->num_rows === 0) {
         $pro_img=$row['image_1'];
         $pro_name=$row['name'];
         $pro_price=$row['price'];
-
+        $queryStarRatingSql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE product_id = ?";
+        $stmtdDisplayRating = mysqli_prepare($conn, $queryStarRatingSql);
+        if ($stmtdDisplayRating) {
+            mysqli_stmt_bind_param($stmtdDisplayRating, 's', $row["product_id"]);
+            mysqli_stmt_execute($stmtdDisplayRating);
+            mysqli_stmt_bind_result($stmtdDisplayRating, $avgRating);
+            mysqli_stmt_fetch($stmtdDisplayRating);
+            $roundedAvgRating = round($avgRating);
+            $userRatingDisplay = '';
+            for ($i = 1; $i <= 5; $i++) {
+            $starDisplayClass = ($i <= $roundedAvgRating) ? 'star-filled' : 'star-empty';
+            $userRatingDisplay .= '<span><i class="fa fa-star ' . $starDisplayClass . '"></i></span>';
+        }
+            mysqli_stmt_close($stmtdDisplayRating);
+        } else {
+            echo "Error preparing the statement.";
+        }
         $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
         $stmt = $conn->prepare($alreadyFavorSql);
         $stmt->bind_param("is", $user_id, $pro_id); // Assuming $user_id is set elsewhere
@@ -579,7 +651,7 @@ if ($drinkResult->num_rows === 0) {
                 <h3 class="card-title"><?php echo $row['name']; ?></h3>
                 <div class="rate">
                     <p>Đánh Giá:</p>
-                    <!-- Add star ratings here -->
+                    <?php echo $userRatingDisplay; ?>
                 </div>
                 <div class="price">
                     <p>Giá:<p> <strong><?php echo $row['price']; ?> VNĐ</strong>
@@ -617,7 +689,23 @@ if ($drinkResult->num_rows === 0) {
         $pro_img=$row['image_1'];
         $pro_name=$row['name'];
         $pro_price=$row['price'];
-
+        $queryStarRatingSql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE product_id = ?";
+        $stmtdDisplayRating = mysqli_prepare($conn, $queryStarRatingSql);
+        if ($stmtdDisplayRating) {
+            mysqli_stmt_bind_param($stmtdDisplayRating, 's', $row["product_id"]);
+            mysqli_stmt_execute($stmtdDisplayRating);
+            mysqli_stmt_bind_result($stmtdDisplayRating, $avgRating);
+            mysqli_stmt_fetch($stmtdDisplayRating);
+            $roundedAvgRating = round($avgRating);
+            $userRatingDisplay = '';
+            for ($i = 1; $i <= 5; $i++) {
+            $starDisplayClass = ($i <= $roundedAvgRating) ? 'star-filled' : 'star-empty';
+            $userRatingDisplay .= '<span><i class="fa fa-star ' . $starDisplayClass . '"></i></span>';
+        }
+            mysqli_stmt_close($stmtdDisplayRating);
+        } else {
+            echo "Error preparing the statement.";
+        }
         $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
         $stmt = $conn->prepare($alreadyFavorSql);
         $stmt->bind_param("is", $user_id, $pro_id); // Assuming $user_id is set elsewhere
@@ -639,7 +727,7 @@ if ($drinkResult->num_rows === 0) {
                 <h3 class="card-title"><?php echo $row['name']; ?></h3>
                 <div class="rate">
                     <p>Đánh Giá:</p>
-                    <!-- Add star ratings here -->
+                    <?php echo $userRatingDisplay; ?>
                 </div>
                 <div class="price">
                     <p>Giá:<p> <strong><?php echo $row['price']; ?> VNĐ</strong>
@@ -677,7 +765,23 @@ if ($drinkResult->num_rows === 0) {
         $pro_img=$row['image_1'];
         $pro_name=$row['name'];
         $pro_price=$row['price'];
-
+        $queryStarRatingSql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE product_id = ?";
+        $stmtdDisplayRating = mysqli_prepare($conn, $queryStarRatingSql);
+        if ($stmtdDisplayRating) {
+            mysqli_stmt_bind_param($stmtdDisplayRating, 's', $row["product_id"]);
+            mysqli_stmt_execute($stmtdDisplayRating);
+            mysqli_stmt_bind_result($stmtdDisplayRating, $avgRating);
+            mysqli_stmt_fetch($stmtdDisplayRating);
+            $roundedAvgRating = round($avgRating);
+            $userRatingDisplay = '';
+            for ($i = 1; $i <= 5; $i++) {
+            $starDisplayClass = ($i <= $roundedAvgRating) ? 'star-filled' : 'star-empty';
+            $userRatingDisplay .= '<span><i class="fa fa-star ' . $starDisplayClass . '"></i></span>';
+        }
+            mysqli_stmt_close($stmtdDisplayRating);
+        } else {
+            echo "Error preparing the statement.";
+        }
         $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
         $stmt = $conn->prepare($alreadyFavorSql);
         $stmt->bind_param("is", $user_id, $pro_id); // Assuming $user_id is set elsewhere
@@ -699,7 +803,9 @@ if ($drinkResult->num_rows === 0) {
                 <h3 class="card-title"><?php echo $row['name']; ?></h3>
                 <div class="rate">
                     <p>Đánh Giá:</p>
-                    <!-- Add star ratings here -->
+                    <?php 
+                    echo $userRatingDisplay;
+                    ?>
                 </div>
                 <div class="price">
                     <p>Giá:<p> <strong><?php echo $row['price']; ?> VNĐ</strong>

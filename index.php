@@ -29,11 +29,7 @@ if ($isUserLoggedIn) {
     $userBtnOut = '<a href="login.php" class="log-in-btn">Đăng nhập <i class="fa-solid fa-arrow-right-to-bracket"></i></a>';
     $profileImage = 'Home-img/non-lgin.png'; 
 }
-
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,7 +89,7 @@ if ($isUserLoggedIn) {
                     <ul>
                         <li><a href="#" class="home-active">Trang chủ</a></li>
                         <li><a href="produces-page.php">Menu</a></li>
-                        <li><a href="#">Nhà hàng</a></li>
+                        <li><a href="restaurant_page.php    ">Nhà hàng</a></li>
                     </ul>
             </div>
             <div class="function">
@@ -133,7 +129,61 @@ if ($isUserLoggedIn) {
                     </div>
             </div>
         </nav>
+        <div class="bar" id="responBar" >
+            <div class="bar-content">
+                <span class="line1"></span>
+                <span class="line2"></span>
+                <span class="line3"></span>
+            </div>
+        </div>  
+        <div class="hidden_search">
+            <div class="search">
+                <form action="results_of_search.php" method="get">
+                    <input type="text" id="searchInput" name="search-query"  placeholder="Tìm kiếm sản phẩm" autocomplete="off"  onkeyup="liveSearch(this.value);">
+                    <div class="category-search"><a href="advance_search.php"><i class="fa-solid fa-sliders"></a></i></div>
+                    <button class="sear-btn" type="submit"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="hidden-bar" id="hiddenBar">
+            <div class="hidden-bar-links">
+                <a href="#"><li>Trang chủ</li></a>
+                <a href="produces-page.php" class="menu-active"><li>Menu</li></a>
+                <a href="restaurant_page.php" ><li>Nhà hàng</li></a>
+            </div>
+            <div class="hidden-bar-function">
+                    <div class="btn-login">
+                        <div class="btn-login-container">
+                            <div class="btn-login-content">
+                                    <div class="avatar-img">
+                                        <img id="profileImage" src="<?php echo $profileImage; ?>" alt="">
+                                    </div>
+                                <?php echo $userNameIn; ?>
+                                <?php echo $userHis; ?>
+                                <?php echo $userBtnOut; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cart">
+                    <?php if($isUserLoggedIn): ?>
+                            <a href="cart.php"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+                            <span id="hidden-cartBadge" class="badge"></span> 
+                        <?php else: ?>
+                            <a href="cart.php" onclick="showLoginAnnouncement(event)"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+                            <span id="hidden-cartBadge" class="badge"></span> 
+                        <?php endif; ?>
+                    </div>
+                    <div class="favor">
+                        <?php if($isUserLoggedIn): ?>
+                            <a href="favor.php"><i class="fa-solid fa-heart fa-lg"></i></i></a>
+                        <?php else: ?>
+                            <a href="favor.php" onclick="showLoginAnnouncement(event)"><i class="fa-solid fa-heart fa-lg"></i></a>
+                        <?php endif; ?>
+                    </div>
+            </div>
+        </div>
     </header>
+
     <div class="sidebar-container">
         <div class="sidebar-content">
             <div class="item-img">
@@ -237,8 +287,25 @@ if ($isUserLoggedIn) {
                         $result = $stmt->get_result();
                         $isFavorited = $result->num_rows > 0;
                         $stmt->close();
+                        $queryStarRatingSql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE product_id = ?";
+                        $stmtdDisplayRating = mysqli_prepare($conn, $queryStarRatingSql);
+                        if ($stmtdDisplayRating) {
+                            mysqli_stmt_bind_param($stmtdDisplayRating, 's', $row["product_id"]);
+                            mysqli_stmt_execute($stmtdDisplayRating);
+                            mysqli_stmt_bind_result($stmtdDisplayRating, $avgRating);
+                            mysqli_stmt_fetch($stmtdDisplayRating);
+                            $roundedAvgRating = round($avgRating);
+                            $userRatingDisplay = '';
+                            for ($i = 1; $i <= 5; $i++) {
+                                $starDisplayClass = ($i <= $roundedAvgRating) ? 'star-filled' : 'star-empty';
+                                $userRatingDisplay .= '<span><i class="fa fa-star ' . $starDisplayClass . '"></i></span>';
+                            }
+                            mysqli_stmt_close($stmtdDisplayRating);
+                        } else {
+                            echo "Error preparing the statement.";
+                        }
                         echo '<div class="item">';
-                        if ($user_id){
+                        if ($isUserLoggedIn){
                             echo '<div class="like" data-user-id="' . $user_id . '" data-product-id="' . $row["product_id"] . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2); cursor: default;"' : '') . '></i></div>';
                         }
                         else{
@@ -249,6 +316,8 @@ if ($isUserLoggedIn) {
                     </div>';
                         echo '<div class="special-content">';
                         echo '<h2>' . $row['name'] . '</h2>';
+                        
+                        echo'<div class ="special-evaluate"><p>Đánh Giá:</p> ' . $userRatingDisplay .'</div>';
                         echo '<p>Giá: <b>' . $row['price'] . ' VNĐ</b></p>';
                         echo '</div>';
                         echo'<div class="function-card-btn">';
@@ -264,8 +333,10 @@ if ($isUserLoggedIn) {
                 } else {
                     echo 'No products found.';
                 }
-?>
+            ?>
             </div>
+        </div>
+        <a href="produces-page.php" class="menuBtn" > Xem Thêm <i class="fa-solid fa-clipboard-list"></i></a> 
         </section>
         <section class="testimonial" id="testimonial">
             <h1 class="sec-header4">Nhận xét về chúng tôi</h1>

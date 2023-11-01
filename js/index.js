@@ -12,6 +12,7 @@ window.addEventListener("load", () => {
         }, 200);
     }, 4200);
 });
+
 document.addEventListener('DOMContentLoaded', function () {
     var lgOut = document.getElementById("lg-out-message");
     var confirmButton = document.getElementById("confirmLogout");
@@ -32,6 +33,16 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.href = "log_out.php";
     });
 }
+});
+//hiện responsive menu
+document.addEventListener("DOMContentLoaded", function () {
+    const bar = document.getElementById('responBar');
+    const hiddenMenu = document.getElementById('hiddenBar');
+
+    bar.onclick = function () {
+        bar.classList.toggle('openbar');
+        hiddenMenu.classList.toggle('bar-active');
+    };
 });
 
 //==========================================================================================
@@ -73,6 +84,7 @@ window.addEventListener("scroll", function() {
     }
     prevScrollPos = currentScrollPos;
 });
+//Hiển thị sidebar
 window.addEventListener("scroll", function() {
     const sidebar = document.querySelector(".sidebar-container");
     const start = document.querySelector(".top-content");
@@ -91,12 +103,8 @@ window.addEventListener("scroll", function() {
         sidebar.style.pointerEvents = "none"; 
     }
 });
-const bar =document.querySelector('.bar');
-const hiddenMenu = document.querySelector('.hidden-bar')
-bar.onclick = function(){
-    bar.classList.toggle('openbar')
-    hiddenMenu.classList.toggle('bar-active')
-}
+
+
 
  // ==========================================================================
   // ==========================================================================

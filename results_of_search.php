@@ -1,7 +1,10 @@
 <?php 
 include("connect.php");
-$isUserLoggedIn = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 session_start();
+$isUserLoggedIn = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
+if ($isUserLoggedIn) {
+$user_id= $_SESSION['user_id'];
+}
 if (isset($_GET['search-query'])) {
     $query = $_GET['search-query'];
     $sql = "SELECT * FROM products WHERE name LIKE '%$query%'";
@@ -29,13 +32,6 @@ if (isset($_GET['search-query'])) {
 <body>
 <div class="toast" id="toastMessage"></div>
     <nav>
-        <a href="index.php"><i class="fa-solid fa-house"></i> Trang chủ</a>
-        <a href="produces-page.php"><i class="fa-solid fa-clipboard-list"></i> Menus</a>
-        <?php if($isUserLoggedIn): ?>
-                            <a href="cart.php" class="cart-link"><i class="fa-solid fa-bag-shopping"></i> Giỏ hàng <span id="cartBadge" class="badge"></span></a> 
-                        <?php else: ?>
-                            <a href="cart.php" class="cart-link" onclick="showLoginAnnouncement(event)"><i class="fa-solid fa-bag-shopping"></i> Giỏ hàng <span id="cartBadge" class="badge"></span></a> 
-                        <?php endif; ?>
         <div class="search" >
             <form action="results_of_search.php" method="get" class="product-search-form" id="productSearchForm">
             <input type="text" id="searchInput" name="search-query"  placeholder="Tìm kiếm sản phẩm" autocomplete="off"  onkeyup="liveSearch(this.value);">
@@ -44,7 +40,40 @@ if (isset($_GET['search-query'])) {
             <div id='searchResults' class="searchResults"></div>
             </form>
         </div>
+        <a href="index.php"><i class="fa-solid fa-house"></i> Trang chủ</a>
+        <a href="produces-page.php"><i class="fa-solid fa-clipboard-list"></i> Thực đơn</a>
+        <?php if($isUserLoggedIn): ?>
+            <a href="cart.php" class="cart-link"><i class="fa-solid fa-bag-shopping"></i> Giỏ hàng <span id="cartBadge" class="badge"></span></a> 
+            <a href="favor.php" class="favor-link"><i class="fa-solid fa-heart"></i> Yêu thích <span id="favoriteProductCount" class="badge"></span></a>        
+        <?php else: ?>
+            <a href="cart.php" class="cart-link" onclick="showLoginAnnouncement(event)"><i class="fa-solid fa-bag-shopping"></i> Giỏ hàng <span id="cartBadge" class="badge"></span></a> 
+            <a href="favor.php" class="favor-link" onclick="showLoginAnnouncement(event)"><i class="fa-solid fa-heart"></i> Yêu thích <span id="favoriteProductCount" class="badge"></span></a>        
+        <?php endif; ?>
+        
     </nav>
+    <div class="nav-responsive" id ="navResponsive" >
+        <div class="search" >
+            <form action="results_of_search.php" method="get" class="product-search-form" id="productSearchForm">
+            <input type="text" id="searchInput" name="search-query"  placeholder="Tìm kiếm sản phẩm" autocomplete="off"  onkeyup="liveSearch(this.value);">
+            <button class="sear-btn" type="submit"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
+            <div class="category-search"><a href="advance_search.php"><i class="fa-solid fa-sliders"></a></i></div>
+            <div id='searchResults' class="searchResults"></div>
+            </form>
+            <?php if($isUserLoggedIn): ?>
+            <a href="cart.php" class="cart-link"><i class="fa-solid fa-bag-shopping"></i> <span id="cartBadge2" class="badge1"></span></a> 
+            <a href="favor.php" class="favor-link"><i class="fa-solid fa-heart"></i><span id="favoriteProductCount2" class="badge1"></span></a>   
+            <?php else: ?>
+            <a href="cart.php" class="cart-link" onclick="showLoginAnnouncement(event)"><i class="fa-solid fa-bag-shopping"></i> <span id="cartBadge2" class="badge1"></span></a> 
+            <a href="favor.php" class="favor-link" onclick="showLoginAnnouncement(event)" ><i class="fa-solid fa-heart"></i><span id="favoriteProductCount2" class="badge1"></span></a>   
+            <?php endif; ?>    
+            <div id="responsiveMenuDropDown" class="drop-down-btn" ><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+
+        <a href="index.php" class="home-link" ><i class="fa-solid fa-house"></i> Trang chủ</a>
+        <a href="produces-page.php" class="menu-link"><i class="fa-solid fa-clipboard-list"></i> Thực đơn</a>
+        <a href="restaurant_page.php" class="res-link"><i class="fa-solid fa-store"></i> Nhà hàng</a>
+            
+        </div>
 
 
     <h2 class="search-result">Kết Quả Tìm Kiếm Của: <?php echo $query ?></h2>
@@ -56,8 +85,37 @@ if (isset($_GET['search-query'])) {
                     $pro_name = $row['name'];
                     $pro_price =$row['price'];
                     $imagePath = $row['image_1'];
+                    $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
+                        $stmt = $conn->prepare($alreadyFavorSql);
+                        $stmt->bind_param("is", $user_id, $pro_Id ); 
+                        $stmt->execute();
+                        $result2 = $stmt->get_result();
+                        $isFavorited = $result2->num_rows > 0;
+                        $stmt->close();
+                        $queryStarRatingSql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE product_id = ?";
+                        $stmtdDisplayRating = mysqli_prepare($conn, $queryStarRatingSql);
+                        if ($stmtdDisplayRating) {
+                            mysqli_stmt_bind_param($stmtdDisplayRating, 's', $pro_Id);
+                            mysqli_stmt_execute($stmtdDisplayRating);
+                            mysqli_stmt_bind_result($stmtdDisplayRating, $avgRating);
+                            mysqli_stmt_fetch($stmtdDisplayRating);
+                            $roundedAvgRating = round($avgRating);
+                            $userRatingDisplay = '';
+                            for ($i = 1; $i <= 5; $i++) {
+                                $starDisplayClass = ($i <= $roundedAvgRating) ? 'star-filled' : 'star-empty';
+                                $userRatingDisplay .= '<span><i class="fa fa-star ' . $starDisplayClass . '"></i></span>';
+                            }
+                            mysqli_stmt_close($stmtdDisplayRating);
+                        } else {
+                            echo "Error preparing the statement.";
+                        }
                     echo '<div class="card">';
-                    echo '<div class="like"><i class="fa-solid fa-heart" title="Yêu thích"></i></div>';
+                    if ($isUserLoggedIn){
+                        echo '<div class="like" data-user-id="' . $user_id . '" data-product-id="' . $pro_Id  . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2); cursor: default;"' : '') . '></i></div>';
+                    }
+                    else{
+                        echo '<div class="like not-logged-in " data-user-id="' . $user_id . '" data-product-id="' . $row["product_id"] . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2); cursor: default;"' : '') . '></i></div>';
+                    }
                     echo '<div class="fpic-container">';
                     echo '<img src="' . $imagePath . '" class="card-img-top" alt="' . $pro_name . '" />';
                     echo '</div>';
@@ -65,6 +123,7 @@ if (isset($_GET['search-query'])) {
                     echo '<h3 class="card-title">' . $pro_name . '</h3>';
                     echo '<div class="rate">';
                     echo '<p>Đánh Giá:</p>';
+                    echo $userRatingDisplay;
                     echo '</div>';
                     echo '<div class="price">';
                     echo '<p>Giá:<p> <strong>' . $row['price'] . ' VNĐ</strong>';
@@ -72,7 +131,7 @@ if (isset($_GET['search-query'])) {
                     echo '<div class="card-link">';
                     echo '<a href="Single-product-detail.php?product_id=' . $pro_Id . '" class="btn">Tìm hiểu thêm<i class="fa-solid fa-circle-question"></i></a>';
                     
-                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+                    if ($isUserLoggedIn) {
                         echo '<button class="addToCart btn" data-product-id="' . $pro_Id . '">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';
                     } else {
                         echo '<button class="addToCart btn" onclick="showLoginAnnouncement(event)" >Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';

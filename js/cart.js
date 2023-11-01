@@ -7,19 +7,19 @@ function loadCart() {
         }
     });
 }
-
+//tăng sl sản phẩm
 $(".plus").on("click", function() {
     const productId = $(this).data("product-id");
     increaseQuantity(productId);
 });
 
-// When a "Minus" button is clicked
+//giảm sl sản phẩm
 $(".minus").on("click", function() {
     const productId = $(this).data("product-id");
     decreaseQuantity(productId);
 });
 
-// Function to handle increasing quantity
+
 function increaseQuantity(productId) {
     updateQuantity(productId, "increase");
 }
@@ -34,7 +34,6 @@ function updateQuantity(productId, action) {
     } else if (action === "decrease") {
         url = "decrease_product.php";
     }
-
     $.ajax({
         type: "POST",
         url: url,
@@ -74,11 +73,11 @@ $(".product-checkbox").on("change", function() {
     const isChecked = $(this).is(":checked");
     $.ajax({
         type: "POST",
-        url: "selected_product_in_cart.php", // Create this PHP script to handle the update
+        url: "selected_product_in_cart.php", 
         data: { product_id: productId, checked: isChecked ? 1 : 0 },
         success: function(response) {
             if (response === "Updated successfully!") {
-                // Update the overall total or perform any other necessary actions
+
                 updateOverallTotal();
             } else {
                 alert(response);
@@ -91,7 +90,6 @@ function updateOverallTotal() {
     let selectedTotal = 0;
     const selectedProducts = [];
 
-    // Iterate through all checkboxes and calculate the total for checked products
     $(".product-checkbox:checked").each(function() {
         const price = parseFloat($(this).data("product-price"));
         const quantity = parseInt($(this).data("product-quantity"));
@@ -145,7 +143,6 @@ $(document).ready(function() {
         const productContainer = document.querySelector(".product-container");
         const products = document.querySelectorAll(".products");
 
-        // Check if there are more than three products
         if (products.length > 3) {
             productContainer.classList.add("scrollbar");
         }

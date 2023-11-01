@@ -12,7 +12,7 @@ window.addEventListener("scroll", function() {
     const currentScrollPos = window.pageYOffset;
 
     if (prevScrollPos > currentScrollPos) {
-        // Scrolling up
+        // kéo lên
         if (!isNavVisible) {
             nav.style.top = "0";
             nav.classList.add("sticky");
@@ -26,39 +26,36 @@ window.addEventListener("scroll", function() {
             isNavVisible = false;
         }
     }
-
     if (currentScrollPos === 0) {
         reachedTop = true;
     } else {
         reachedTop = false;
     }
-
     if (reachedTop) {
         nav.classList.remove("sticky");
     } else {
         nav.classList.add("sticky");
     }
-
     prevScrollPos = currentScrollPos;
 });
+// tương tác giữ scroll và sidebar
 window.addEventListener("scroll", function() {
     const sidebar = document.querySelector(".sidebar-container");
     const start = document.querySelector(".start");
     const end = document.querySelector("#footer");
-
-    // Calculate the position of section 1 and section 6 relative to the viewport
+    //tính khoảng cách hiển thị
     const rectS = start.getBoundingClientRect();
     const rectE = end.getBoundingClientRect();
-
-    // If section 1 is above the viewport and section 6 is below the viewport, show the sidebar
+    //khoảng cách hiển thị side bar
     if (rectS.bottom < 0 && rectE.top > window.innerHeight) {
-        sidebar.style.opacity = "1"; // Set opacity to 1 to make it visible
-        sidebar.style.pointerEvents = "auto"; // Enable pointer events
+        sidebar.style.opacity = "1"; 
+        sidebar.style.pointerEvents = "auto"; 
     } else {
-        sidebar.style.opacity = "0"; // Set opacity to 0 to hide it
-        sidebar.style.pointerEvents = "none"; // Disable pointer events
+        sidebar.style.opacity = "0"; 
+        sidebar.style.pointerEvents = "none"; 
     }
 });
+// hiện responsive menu
 const bar =document.querySelector('.bar');
 const hiddenMenu = document.querySelector('.hidden-bar')
 bar.onclick = function(){
@@ -66,15 +63,9 @@ bar.onclick = function(){
     hiddenMenu.classList.toggle('bar-active')
 }
 
-
-
-
-
 window.addEventListener("load", () => {
-    // Add the class that disables scrolling
+    //khi load, không được scroll
     document.body.classList.add("disable-scroll");
-
-    // Delay for 4 seconds (4000 milliseconds) before removing the loader
     setTimeout(() => {
         const loaderContainer = document.querySelector(".loader-container");
         loaderContainer.classList.add("loader-container--hidden");
@@ -87,15 +78,12 @@ window.addEventListener("load", () => {
     }, 3350);
 });
 
-
+// hiển thị hàng thứ 2 ở các phân loại 
 function toggleSection(buttonId, sectionId) {
     const button = document.getElementById(buttonId);
     const section = document.getElementById(sectionId);
-    
-    // Check if the button exists
     if (button) {
         const secondRow = section.querySelectorAll('.card.hidden'); 
-
         button.addEventListener('click', () => {
             secondRow.forEach(card => {
                 card.classList.toggle('hidden');
@@ -111,8 +99,7 @@ function toggleSection(buttonId, sectionId) {
         });
     }
 }
-
-// Apply to sections with corresponding buttons
+// áp dụng cho các nút 
 toggleSection('showSecondRow1', 'stuff1');
 toggleSection('showSecondRow2', 'stuff2');
 toggleSection('showSecondRow3', 'stuff3');
@@ -120,19 +107,18 @@ toggleSection('showSecondRow4', 'stuff4');
 toggleSection('showSecondRow5', 'stuff5');
 toggleSection('showSecondRow6', 'stuff6');
 
+// ấn nút để chuyển đến phân loại
 document.addEventListener("DOMContentLoaded", function() {
     for (let i = 1; i <= 6; i++) {
         const item = document.getElementById(`item${i}`);
         const section = document.getElementById(`section${i}`);
         const fSpecial = document.getElementById('f-special');
         const specialSection = document.getElementById("special");
-
         item.addEventListener("click", function() {
             setTimeout(function() {
                 section.scrollIntoView({ behavior: "smooth", block: "start" });
             }, 200); // 
         });
-
         fSpecial.addEventListener("click", function() {
             setTimeout(function() {
                 specialSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -146,7 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var confirmButton = document.getElementById("confirmLogout");
     var cancelButton = document.getElementById("cancelLogout");
     var lgOutBtn = document.querySelector(".log-out-btn");
-
     if(lgOutBtn){
     function openMes() {
         lgOut.style.display = "block";
@@ -164,13 +149,12 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 });
 
-
+//carousel có thể kéo, tự động chuyển, có nút bấm
 const wrapper = document.querySelector(".wrapper");
 const carousel = document.querySelector(".carousel");
 const firstCardWidth = carousel.querySelector(".guest-card").offsetWidth;
 const arrowBtns = document.querySelectorAll(".wrapper i");
 const carouselChildrens = [...carousel.children];
-
 let isDragging = false, isAutoPlay = true, startX, startScrollLeft, timeoutId;
 let cardPerView = Math.round(carousel.offsetWidth / firstCardWidth);
 carouselChildrens.slice(-cardPerView).reverse().forEach(card => {
@@ -179,11 +163,9 @@ carouselChildrens.slice(-cardPerView).reverse().forEach(card => {
 carouselChildrens.slice(0, cardPerView).forEach(card => {
     carousel.insertAdjacentHTML("beforeend", card.outerHTML);
 });
-
 carousel.classList.add("no-transition");
 carousel.scrollLeft = carousel.offsetWidth;
 carousel.classList.remove("no-transition");
-
 arrowBtns.forEach(btn => {
     btn.addEventListener("click", () => {
         carousel.scrollLeft += btn.id == "left" ? -firstCardWidth : firstCardWidth;
@@ -229,7 +211,7 @@ carousel.addEventListener("scroll", infiniteScroll);
 wrapper.addEventListener("mouseenter", () => clearTimeout(timeoutId));
 wrapper.addEventListener("mouseleave", autoPlay);
 
-
+// hiển thị sản phẩm sl sản phẩm trong giỏ, thêm sản phẩm vào giỏ
 $(document).ready(function() {
     function updateCartBadge() {
         $.ajax({
@@ -268,7 +250,7 @@ $(document).ready(function() {
                 }
                 setTimeout(function() {
                     showToast.hide();
-                    showToast.removeClass("success-toast error-toast"); // Remove styling classes
+                    showToast.removeClass("success-toast error-toast"); 
                 }, 3500);
             }
         });
@@ -299,8 +281,6 @@ function showLoginAnnouncement(event) {
     }, 4000);
 }
 }
-
-
 var http; 
 function object() {
     if (window.XMLHttpRequest) {
@@ -368,10 +348,9 @@ function handleScroll() {
 }
 let lastScrollY = 0;
 if (document.getElementById("searchResults")) {
-    // Add an event listener for the scroll event
     window.addEventListener("scroll", handleScroll);
 }
-
+//thêm sản phẩm vào trang sản phẩm yêu thích
 $(document).ready(function () {
     $(".like").on("click", function () {
         const userId = $(this).data("user-id");
@@ -388,10 +367,10 @@ $(document).ready(function () {
                 success: function (response) {
                     console.log("Ajax response:", response); 
                     if (response.status === "success") {
-                        var showToast = $("#cartAnnounce");
+                        var showToast = $("#toastMessage");
                         showToast.show();
                         showToast.text(response.message);
-                        showToast.addClass("success-announce");
+                        showToast.addClass("success-toast");
                         console.log("Like button:", likeButton); 
                         likeButton.find("i").css({
                             pointerEvents: 'none',
@@ -414,52 +393,7 @@ $(document).ready(function () {
         }
     });
 });
-$(document).ready(function () {
-    $(".like").on("click", function () {
-        const userId = $(this).data("user-id"); 
-        const isLoggedIn = document.querySelector(".not-logged-in");
-        const productId = $(this).data("product-id"); 
-        const likeButton = $(this);
-        if(!isLoggedIn){
-        $.ajax({
-            type: "POST",
-            url: "add_to_favorites.php",
-            data: { user_id: userId, product_id: productId },
-            dataType: "json",
-            success: function (response) {
-                if (response.status === "success") {
-                    var showToast = $("#toastMessage");
-                    showToast.show();
-                    showToast.text(response.message); 
-                    showToast.addClass("success-toast"); 
-                    likeButton.find("i").css({
-                        cursor: 'default',
-                        pointerEvents: 'none',
-                        color: 'var(--heart-color)',
-                        transform: 'scale(1.2)'
-                    });
-                } else {
-                    var showToast = $("#toastMessage");
-                    showToast.text(response.message); 
-                    showToast.addClass("error-toast"); 
-                }
-                setTimeout(function() {
-                    if(showToast){
-                    showToast.hide();
-                    showToast.removeClass("success-toast error-toast");
-                    }
-                }, 3500);
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                console.error("Error: " + textStatus, errorThrown);
-                alert("Lỗi."); 
-            }
-        });
-    } else{
-        showLoginAnnouncement();
-    }
-    });
-});
+
 
 
 

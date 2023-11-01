@@ -7,7 +7,23 @@ if (isset($_SESSION['user_id'])) {
 }
 if (isset($_GET['product_id'])) {
     $product_id = $_GET['product_id'];
-    
+    $queryStarRatingSql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE product_id = ?";
+    $stmtdDisplayRating = mysqli_prepare($conn, $queryStarRatingSql);
+    if ($stmtdDisplayRating) {
+        mysqli_stmt_bind_param($stmtdDisplayRating, 's', $product_id);
+        mysqli_stmt_execute($stmtdDisplayRating);
+        mysqli_stmt_bind_result($stmtdDisplayRating, $avgRating);
+        mysqli_stmt_fetch($stmtdDisplayRating);
+        $roundedAvgRating = round($avgRating);
+        $userRatingDisplay = '';
+        for ($i = 1; $i <= 5; $i++) {
+            $starDisplayClass = ($i <= $roundedAvgRating) ? 'star-filled' : 'star-empty';
+            $userRatingDisplay .= '<span><i class="fa fa-star ' . $starDisplayClass . '"></i></span>';
+        }
+        mysqli_stmt_close($stmtdDisplayRating);
+    } else {
+        echo "Error preparing the statement.";
+    }
     // Query to fetch product details
     $sql = "SELECT * FROM products WHERE product_id = ?";
     $stmt = $conn->prepare($sql);
@@ -102,7 +118,8 @@ if (isset($_GET['product_id'])) {
         $related_product_name = $related_row['name'];
         $related_product_price = $related_row['price'];
         $related_product_img = $related_row['image_1'];
-
+        $queryRelateStarRatingSql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE product_id = ?";
+        
         $alreadyFavorSql = "SELECT * FROM favorite_products WHERE user_id = ? AND product_id = ?";
         $stmt = $conn->prepare($alreadyFavorSql);
         $stmt->bind_param("is", $user_id, $related_product_ID);
@@ -121,17 +138,29 @@ if (isset($_GET['product_id'])) {
         }else{
         $relateResPro .= '<div class="like not-logged-in" data-user-id="' . $user_id . '" data-product-id="' . $related_product_ID . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
         }
+        $stmtdDisplayRelateRating = mysqli_prepare($conn, $queryRelateStarRatingSql);
+        if ($stmtdDisplayRelateRating) {
+            mysqli_stmt_bind_param($stmtdDisplayRelateRating, 's', $related_product_ID);
+            mysqli_stmt_execute($stmtdDisplayRelateRating);
+            mysqli_stmt_bind_result($stmtdDisplayRelateRating, $avgRating);
+            mysqli_stmt_fetch($stmtdDisplayRelateRating);
+            $roundedAvgRating1 = round($avgRating);
+            $userRatingRelateDisplay = '';
+            for ($i = 1; $i <= 5; $i++) {
+                $starDisplayRelateClass = ($i <= $roundedAvgRating1) ? 'star-filled' : 'star-empty';
+                $userRatingRelateDisplay .= '<span><i class="fa fa-star ' . $starDisplayRelateClass . '"></i></span>';
+            }
+            mysqli_stmt_close($stmtdDisplayRelateRating);
+        } else {
+            echo "Error preparing the statement.";
+        }
         $relateResPro .='<div class="fpic-container">';
         $relateResPro .='<img src="' . $related_product_img  . '" class="card-img-top" alt="' . $related_product_name . '">';
         $relateResPro .= '</div>';
         $relateResPro .='<div class="card-body">';
         $relateResPro .='<h3 class="card-title">' . $related_product_name . '</h3>';
-        $relateResPro .='<div class="star"><i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        </div>';
+
+        $relateResPro .= '<div class="card-rating">' . $userRatingRelateDisplay . '</div>' ;
         $relateResPro .='<div class="price"> <p>Giá:<p> <strong>' . $related_product_price . '</strong></div>';
         $relateResPro .='<div class="card-link">';
         $relateResPro .= '<a href="Single-product-detail.php?product_id=';
@@ -246,16 +275,11 @@ if (isset($_GET['product_id'])) {
             $userCommentsHtml .= '<h4 style ="font-weight: 500; letter-spacing=1px; font-style: italic; color: gray;">Chưa có bình luận nào</h4>';
             $userCommentsHtml .= '</div>';
         }
-    
         $stmtRating->close();
     }
 
 
 ?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -273,7 +297,6 @@ if (isset($_GET['product_id'])) {
         <div class = "card">
             <?php
             if(!$isRestaurantLoggedIn){
-                
                 echo '<div class="return-menu">';
                 echo '<a href="javascript:history.go(-1)"><i class="fa-solid fa-rotate-left"></i>Quay về</a>';
                 echo'<a href="index.php" ><i class="fa-solid fa-house"></i>Trang chủ</a>';
@@ -282,7 +305,6 @@ if (isset($_GET['product_id'])) {
                 echo'<a href="cart.php" ><i class="fa-solid fa-bag-shopping"></i><span class="badge" id="cartBadge"></span>Giỏ hàng</a>';
                 }else{
                     echo'<a href="cart.php" onclick="showLoginAnnouncement(event)" ><i class="fa-solid fa-bag-shopping"></i><span class="badge" id="cartBadge"></span>Giỏ hàng</a>';
-                    
                 }
                 echo'</div>';
             }else{
@@ -345,13 +367,19 @@ if (isset($_GET['product_id'])) {
                 <div class="line"></div>
                 <div class="product-rating">
         <p>Đánh giá: </p>
-        <div class="star"><i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        </div>
-        <span>(58)</span>
+        <?php 
+        echo $userRatingDisplay;
+        ?>
+        <span>
+            <?php
+                if (isset($userCountRow['user_count'])) {
+                    $userCount = $userCountRow['user_count'];
+                    echo '('. $userCount . ')';
+                }else{
+                    echo "0";
+                }
+            ?>
+        </span>
     </div>
 
                 <div class="buy">

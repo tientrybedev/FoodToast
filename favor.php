@@ -53,7 +53,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
 if (empty($relateResPro)) {
     $relateResPro = '<div class="no-related-products">';
-    $relateResPro .= '<p>Không có sản phẩm yêu thích</p>';
+    $relateResPro .= '<p>Bạn chưa có có sản phẩm yêu thích</p>';
     $relateResPro .= '</div>';
 }
 

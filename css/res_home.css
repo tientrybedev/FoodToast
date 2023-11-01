@@ -1008,3 +1008,9 @@ body{
     background-color: #D0D4CA;
     border-radius: 3px;
 }
+
+@media screen and (max-width:1000px)  {
+    .res_product_container{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

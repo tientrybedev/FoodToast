@@ -1,4 +1,5 @@
 <?php
+include("connect.php");
 session_start();
 $isUserLoggedIn = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 if ($isUserLoggedIn) {
@@ -20,6 +21,13 @@ $user_id = $_SESSION['user_id'];
     <h1 class="advance-search-header">Tìm kiếm nâng cao</h1>
     <section class="filter-function">
     <a class="return-prev" href="javascript:history.go(-1)" ><i class="fa-solid fa-rotate-left"></i> Quay về</a>
+    <a href="Index.php" class="home-btn"><i class="fa-solid fa-house"></i> Trang chủ</a>
+    <a href="produces-page.php" class="menu-btn" ><i class="fa-solid fa-clipboard-list"></i> Thực đơn</a>
+    <?php if ($isUserLoggedIn): ?>
+        <a href="cart.php" class="cart-btn" ><i class="fa-solid fa-bag-shopping"></i><span class="badge" id="cartBadge"></span>Giỏ hàng</a>
+        <?php else: ?>
+            <a href="cart.php" class="cart-btn" onclick="showLoginAnnouncement(event)" ><i class="fa-solid fa-bag-shopping"></i><span class="badge" id="cartBadge"></span>Giỏ hàng</a>
+        <?php endif; ?>
         <form id="advancedSearchForm" method="post" action="advance_search_process.php">
             <div class="category-section">
                 <div class="category-choices-result">

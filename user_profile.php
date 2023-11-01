@@ -6,11 +6,13 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $historysql = "SELECT 
         od.product_id, od.quantity, od.subtotal, od.order_status, od.show_time,
         o.order_id, o.order_date, o.total_price,
-        p.final_payment, pd.payment_type, pd.delivery_cost
+        p.final_payment, pd.payment_type, pd.delivery_cost,
+        pr.name
     FROM orders o
     JOIN order_details od ON o.order_id = od.order_id
     JOIN payment p ON o.order_id = p.order_id
     JOIN payment_details pd ON p.payment_id = pd.payment_id
+    JOIN products pr ON od.product_id = pr.product_id  
     WHERE o.user_id = $user_id";
     $result = mysqli_query($conn, $historysql);
     
@@ -138,26 +140,28 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <div class="history">
         <h3>Theo dõi đơn hàng</h3>
         <div class="detail-history">
-            
 <?php
 echo '<table>';
 echo '<thead>';
 echo '<tr>';
 echo '<th>Mã đơn hàng</th>';
 echo '<th>Mã sản phẩm</th>';
+echo '<th>Tên sản phẩm</th>';
 echo '<th>Số lượng</th>';
 echo '<th>Tổng tiền sản phẩm</th>';
 echo '<th>Trạng thái đơn hàng</th>';
+echo '<th>Ngày mua hàng</th>';
 echo '<th>Ngày cập nhật</th>';
 echo '</tr>';
 echo '</thead>';
-echo '<tbody>';
+echo '<tbody class="table-body" >';
 $previousOrderId = null; 
 while ($row = mysqli_fetch_assoc($result)) {
     echo '<tr>';
     if ($previousOrderId !== $row['order_id']) {
         echo '<td>' . $row['order_id'] . '</td>';
-        echo '<td>' . $row['product_id'] . '</td>';
+        echo '<td><a href="Single-product-detail.php?product_id='. $row['product_id'] .'" class="info-btn">'.$row['product_id'].'</a></td>';
+        echo '<td>' . $row['name'] . '</td>';
         echo '<td>' . $row['quantity'] . '</td>';
         echo '<td>' . $row['subtotal'] . '</td>';
         switch ($row['order_status']) {
@@ -178,11 +182,13 @@ while ($row = mysqli_fetch_assoc($result)) {
         }
         
         echo '<td>' . $statusText . '</td>';
+        echo '<td>' . $row['order_date'] . '</td>';
         echo '<td>' . $row['show_time'] . '</td>';
         $previousOrderId = $row['order_id'];
     } else {
         echo '<td></td>';
-        echo '<td>' . $row['product_id'] . '</td>';
+        echo '<td><a href="Single-product-detail.php?product_id='. $row['product_id'] .'" class="info-btn">'.$row['product_id'].'</a></td>';
+        echo '<td>' . $row['name'] . '</td>';
         echo '<td>' . $row['quantity'] . '</td>';
         echo '<td>' . $row['subtotal'] . '</td>';
         
@@ -205,6 +211,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         }
         
         echo '<td>' . $statusText . '</td>';
+        echo '<td>' . $row['order_date'] . '</td>';
         echo '<td>' . $row['show_time'] . '</td>';
     }
 }
@@ -214,7 +221,6 @@ echo '</table>';
 
 </div>
 
-?>
 
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
