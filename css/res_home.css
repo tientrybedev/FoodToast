@@ -978,6 +978,7 @@ body{
     cursor: pointer;
 }
 .res_orders{
+    position: relative;
     width: 95%;
 }
 .res_orders table{
@@ -1007,6 +1008,14 @@ body{
     color: var(--close-x-color);
     background-color: #D0D4CA;
     border-radius: 3px;
+}
+.total-revenue{
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    font-weight: 500;
+    color: var(--tick-color);
+    font-size: 1.1rem;
 }
 
 @media screen and (max-width:1000px)  {

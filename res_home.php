@@ -57,6 +57,7 @@ $orderProducts .= '<th>Số lượng sản phẩm</th>';
 $orderProducts .= '<th>Tổng</th>';
 $orderProducts .= '<th>Trạng thái đơn hàng</th>';
 $orderProducts .='</tr>';
+$totalSubtotal = 0;
 while ($row = $getProductsResult->fetch_assoc()) {
     $order_id = $row["order_id"];
     $product_id = $row["product_id"];
@@ -64,6 +65,7 @@ while ($row = $getProductsResult->fetch_assoc()) {
     $order_quantity = $row["quantity"];
     $order_subtotal = $row["subtotal"];
     $dropdownId = 'orderStatusDropdown_' . $order_id . '_' . $product_id;
+    $totalSubtotal += $order_subtotal;
     $orderProducts .= '<tr>';
     $orderProducts .= '<td>' . $order_id . '</td>';
     $orderProducts .= '<td>' . $product_id . '</td>';
@@ -79,6 +81,7 @@ while ($row = $getProductsResult->fetch_assoc()) {
     $orderProducts .= '</td>';
     $orderProducts .= '</tr>';
 }
+$orderProducts .='<div class ="total-revenue">Doanh thu hiện có: ' . number_format($totalSubtotal, 3, '.', '') . ' VNĐ</div>';
 $orderProducts .= '</table>';
 $product_id = $restaurant_name . "-" . getProductCountForRestaurant($restaurant_id, $conn);
 function getProductCountForRestaurant($restaurant_id, $conn) {
@@ -380,7 +383,7 @@ function getProductCountForRestaurant($restaurant_id, $conn) {
                                 </div>
                                 <div class="card-link">
                                     <?php if ($isRestaurantLoggedIn): ?>
-                                        <a href="Single-product-detail.php?product_id=<?php echo $product_id; ?>" class="openBtn">Chi Tiết  Sản Phẩm <i class="fa-solid fa-circle-question"></i></a>
+                                        <a href="Single-product-detail.php?product_id=<?php echo $product_id; ?>" class="openBtn">Chi Tiết Sản Phẩm <i class="fa-solid fa-circle-question"></i></a>
                                         <button class="openBtn editProductBtn" data-productid="<?php echo $product_id; ?>">Sửa sản phẩm<i class="fa-solid fa-edit"></i></button>
                                         <div class="edit-product-container" id="editProContainer_<?php echo $product_id; ?>">
                                         <div class="edit-product-content">
@@ -429,7 +432,7 @@ function getProductCountForRestaurant($restaurant_id, $conn) {
                                             </div>
                                         </div>
                                     <?php else: ?>
-                                        <a href="Single-product-detail.php?product_id=<?php echo $product_id; ?>" class="openBtn">Chi Tiết<i class="fa-solid fa-circle-question"></i></a>
+                                        <a href="Single-product-detail.php?product_id=<?php echo $product_id; ?>" class="openBtn">Chi Tiết Sản Phẩm<i class="fa-solid fa-circle-question"></i></a>
                                     <?php endif; ?>
                                 </div>
                             </div>

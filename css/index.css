@@ -39,7 +39,25 @@ body{
     min-height: 100vh;
     background-color: var(--bg-color);
 }
+body::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
 
+body::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: var(--star-empty);
+}
 .disable-scroll{
     overflow: hidden;
 }
@@ -309,7 +327,7 @@ body::-webkit-scrollbar-thumb{
     font-size: 1rem;
     border-radius: 10px;
     outline: none;
-    background-color: #D0D4CA;
+    background-color: #FFFFDD;
     border: 2px solid transparent;
     transition: .3s;
 }
@@ -320,6 +338,7 @@ body::-webkit-scrollbar-thumb{
 .toast{
     display: none;
     position: fixed;
+    width: max-content;
     top: 12%;
     left: 50%; 
     transform: translateX(-50%); 
@@ -1941,13 +1960,13 @@ footer{
 }
 @media screen and (max-width:850px)  {
     .waiting-img{
-        top: 32%;
+        top: 38%;
     }
     .loading{
         width: max-content;
     }
     .waiting-card{
-        width: 68px;
+        width: 72px;
     }
     .nav-bar{
         display: none;
@@ -1959,6 +1978,9 @@ footer{
     }
 }
 @media screen and (max-width:740px) {
+    .top-pic img{
+        object-fit: cover;
+    }
     .special-contain{
         grid-template-columns: 1fr;
     }
@@ -1973,6 +1995,10 @@ footer{
 }
 
 @media screen and (max-width:500px) {
+    .top-pic{
+        overflow: hidden;
+        height: 400px;
+    }
     .waiting-card{
         width: 65px;
         margin: 0 10px;
@@ -1981,7 +2007,6 @@ footer{
         top: 40%;
     }
     .loader .loading{
-        width: max-content;
         letter-spacing: 4px;
         font-size: 2rem;
     }

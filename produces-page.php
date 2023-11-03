@@ -328,6 +328,23 @@ if ($drinkResult->num_rows === 0) {
         $randomProductSql = "SELECT product_id, image_1, name, price FROM products ORDER BY RAND() LIMIT 9";
         $randomProductResult = $conn->query($randomProductSql);
         while ($row = $randomProductResult->fetch_assoc()) {
+            $queryStarRatingSql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE product_id = ?";
+            $stmtdDisplayRating = mysqli_prepare($conn, $queryStarRatingSql);
+            if ($stmtdDisplayRating) {
+                mysqli_stmt_bind_param($stmtdDisplayRating, 's', $row["product_id"]);
+                mysqli_stmt_execute($stmtdDisplayRating);
+                mysqli_stmt_bind_result($stmtdDisplayRating, $avgRating);
+                mysqli_stmt_fetch($stmtdDisplayRating);
+                $roundedAvgRating = round($avgRating);
+                $userRatingDisplay = '';
+                for ($i = 1; $i <= 5; $i++) {
+                $starDisplayClass = ($i <= $roundedAvgRating) ? 'star-filled' : 'star-empty';
+                $userRatingDisplay .= '<span><i class="fa fa-star ' . $starDisplayClass . '"></i></span>';
+            }
+                mysqli_stmt_close($stmtdDisplayRating);
+            } else {
+                echo "Error preparing the statement.";
+            }
             echo '<li class="guest-card">';
             echo '<div class="guest-img">';
             echo '<img src="' . $row['image_1'] . '" alt="img" draggable="false">';
@@ -337,11 +354,7 @@ if ($drinkResult->num_rows === 0) {
             echo '</div>';
             echo '<div class="rate">';
             echo '<p>Đánh Giá:</p>';
-            echo '<i class="fa-solid fa-star"></i>';
-            echo '<i class="fa-solid fa-star"></i>';
-            echo '<i class="fa-solid fa-star"></i>';
-            echo '<i class="fa-solid fa-star"></i>';
-            echo '<i class="fa-regular fa-star-half-stroke"></i>';
+            echo $userRatingDisplay;
             echo '</div>';
             echo '<div class="price">';
             echo '<p>Giá:<p> <strong>' . $row['price'] . ' VNĐ</strong>';

@@ -453,6 +453,7 @@ input[type="checkbox"]{
     }
     .right-box{
         border-radius: 10px;
+        gap: .5rem;
     }
     /* .checkbx-box{} */
     .log-txt2 .top-txt::before{
@@ -506,6 +507,21 @@ input[type="checkbox"]{
         }
     }
 
+}
+@media screen and (max-width: 600px){
+    .form-label{
+        left: 10%;
+    }
+    .password-label{
+        bottom: 60%;
+    }
+    .fa-key{
+        bottom: 60%;
+    }
+    .password-input:not(:placeholder-shown) + .password-label, 
+    .password-input:focus + .password-label{
+        bottom: 195px;
+    }
 }
 @media screen and (max-width: 330px){
     h1{

@@ -132,6 +132,7 @@ body::-webkit-scrollbar-thumb
 }
 /* thông báo */
 .toast{
+    width: max-content;
     display: none;
     position: fixed;
     top: 12%;
@@ -646,7 +647,7 @@ body::-webkit-scrollbar-thumb
     position: relative;
 }
 .hidden-bar-function > div{
-    margin:5px 0;
+    margin: 5px 0;
 }
 .hidden_search .search form{
     width: 100%; 
@@ -688,7 +689,6 @@ body::-webkit-scrollbar-thumb
 .hidden_search .search input:focus{
     border: 2px solid #C3ACD0;
 }
-
 
 /*
 =============================================================================
@@ -1135,20 +1135,23 @@ body::-webkit-scrollbar-thumb
     object-fit: cover;
 }
 .carousel .guest-comment{
+    max-width: 265px;
+    word-wrap: break-word;
+    text-transform: capitalize;
     text-align: center;
     font-weight: 500;
 }
 .guest-card .rate,
 .guest-card .price {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     display: flex;
     align-items: center;
 }
 .guest-card .rate p{
-    margin-right: 25px;
+    margin-right: 15px;
 }
 .guest-card .rate i{
-    color: var(--star-icon);
+    font-size: 1.3rem;
 }
 .guest-card .price p{
     margin-left: 35px;

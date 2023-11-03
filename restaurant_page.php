@@ -75,6 +75,7 @@ if ($isUserLoggedIn) {
             </p>
         </div>
     </div>
+    <div class="toast" id="toastMessage"></div>
         <nav class="nav-bar">
             <div class="logo">
                 <a href="#"><img src="Home-img/FT-logo.png" alt=""></a>

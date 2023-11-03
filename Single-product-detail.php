@@ -127,14 +127,9 @@ if (isset($_GET['product_id'])) {
         $result = $stmt->get_result();
         $isFavorited = $result->num_rows > 0;
         $stmt->close();
-        // $FPquery = "SELECT * FROM favorite_products WHERE user_id = $user_id AND product_id = '$related_product_ID'";
-        // $FPresult = mysqli_query($conn, $FPquery);
         $relateResPro .='<div class="card">';
         if(isset($user_id)){
         $relateResPro .= '<div class="like" data-user-id="' . $user_id . '" data-product-id="' . $related_product_ID . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
-        // if (mysqli_num_rows($FPresult) > 0) {
-        //     echo '<button class="removeFF-btn" data-product-id="' . $related_product_ID . '"><i class="fa-solid fa-x"></i></button>';
-        // }
         }else{
         $relateResPro .= '<div class="like not-logged-in" data-user-id="' . $user_id . '" data-product-id="' . $related_product_ID . '"><i class="fa-solid fa-heart" title="Yêu thích" ' . ($isFavorited ? 'style="text-shadow: 0 0 2px; color: var(--heart-color); transform: scale(1.2);"' : '') . '></i></div>';
         }
@@ -165,13 +160,14 @@ if (isset($_GET['product_id'])) {
         $relateResPro .='<div class="card-link">';
         $relateResPro .= '<a href="Single-product-detail.php?product_id=';
         $relateResPro .= $related_product_ID;
-
         $relateResPro .= '" class="btn">Chi tiết sản phẩm<i class="fa-solid fa-circle-question"></i></a>';
-        if (!$isRestaurantLoggedIn && isset($user_id)){
+        if(!$isRestaurantLoggedIn){
+        if (isset($user_id)){
             $relateResPro .='<button class="addToCart btn" data-product-id="' . $related_product_ID . '">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';
         }else{
             $relateResPro .='<button class="addToCart btn" onclick="showLoginAnnouncement(event) ">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>';
         }
+    }
         $relateResPro .='</div>';
         $relateResPro .='</div>';
         $relateResPro .='</div>';

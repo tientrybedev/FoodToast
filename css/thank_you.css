@@ -49,6 +49,7 @@ body::-webkit-scrollbar-thumb
 	background-color: var(--ef-color);
 }
 .thank-you-title{
+    width: max-content;
     position: absolute;
     opacity: 0; 
     top: 15%;
@@ -168,7 +169,7 @@ body::-webkit-scrollbar-thumb
 }
 
   /* Keyframes and animations for the spinner */
-  @keyframes worm-a {
+@keyframes worm-a {
     from {
         stroke-dashoffset: 36.1;
         visibility: visible;
@@ -177,35 +178,35 @@ body::-webkit-scrollbar-thumb
         stroke-dashoffset: -252.9;
         visibility: visible;
     }
-  }
-  
-  @keyframes worm-b {
+}
+
+@keyframes worm-b {
     from {
-      animation-timing-function: linear;
-      stroke-dasharray: 0 0 72.2 341.3;
-      visibility: visible;
+    animation-timing-function: linear;
+    stroke-dasharray: 0 0 72.2 341.3;
+    visibility: visible;
     }
     69.7% {
-      animation-timing-function: ease-out;
-      stroke-dasharray: 0 207 45 341.3;
-      visibility: visible;
+    animation-timing-function: ease-out;
+    stroke-dasharray: 0 207 45 341.3;
+    visibility: visible;
     }
     to {
-     animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
     stroke-dasharray: 0 297 45 341.3;
     visibility: visible;
     }
 }
-  
-  @keyframes circle {
+
+@keyframes circle {
     from {
     r: 0;
     }
     to {
     r: 50px;
+    }
 }
-}
-  
+
 
 
 .thank-content{
@@ -253,4 +254,55 @@ body::-webkit-scrollbar-thumb
 .back-to-cart:hover i{
     color: var(--cart-color);
     transform: translateX(4px);
+}
+.success{
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    position: absolute;
+    top: 60%;
+    left: 41.25%;
+    transform: (-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    animation: .5s apear 2.5s forwards;
+}
+@keyframes apear {
+    from{
+        opacity: 0;
+        visibility: hidden;
+    }
+    to{
+        opacity: 1;
+        visibility: visible;
+    }
+}
+@media screen and (max-width:495px) {
+    body {
+        overflow: hidden;
+    }
+    .thank-you-title{
+        top: 5%;
+        font-size: 1.6rem;
+    }
+    .thank-container{
+        width: 450px;
+        height: 480px
+    }
+    .thank-content{
+        gap: 35px;
+    }
+    .thank-content .text p{
+        text-align: center;
+        max-width: 350px;
+        word-wrap: break-word;
+    }
+}
+@media screen and (max-width:350) {
+    .thank-container{
+        top: 55%;
+    }
+    .thank-content .text p{
+        max-width: 300px;
+    }
 }

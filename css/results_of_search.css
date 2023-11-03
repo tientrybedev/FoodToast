@@ -233,6 +233,16 @@ nav a:not(:first-child):hover i{
     box-shadow: var(--title-shadow);
     border-radius: 5px;
 }
+.total-res{
+    font-size: .9rem;
+    font-weight: 500;
+    margin: 1rem auto;
+    width: fit-content;
+    padding: 5px 8px;
+    border-radius: 5px;
+    background-color: var(--section-color);
+    box-shadow: var(--title-shadow);
+}
 .query-search-section{
     margin: 0 auto;
     padding: 25px;
@@ -612,5 +622,16 @@ footer{
         justify-content: space-around;
         align-items: center;
         font-size: .8rem;
+    }
+    .footer-container,
+    .footer-container h2{
+        text-align: center;
+    }
+    .right,
+    .middle{
+        width: 100%;
+    }
+    .footer-container ul{
+        text-align: center;
     }
 }

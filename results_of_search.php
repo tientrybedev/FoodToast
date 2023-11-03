@@ -77,6 +77,7 @@ if (isset($_GET['search-query'])) {
 
 
     <h2 class="search-result">Kết Quả Tìm Kiếm Của: <?php echo $query ?></h2>
+    <p class="total-res" >Hiện đang có <?php echo $totalRecords  ?> kết quả tìm kiếm</p>
     <section class="query-search-section">
         <?php 
             if (mysqli_num_rows($result) > 0) {

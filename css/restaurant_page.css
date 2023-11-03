@@ -677,7 +677,37 @@ nav .return_links a:hover i{
     font-size: 1.1rem;
     font-weight: 500;
 }
+.toast{
+    width: max-content;
+    display: none;
+    position: fixed;
+    top: 12%;
+    left: 50%; 
+    font-size: 1.3rem;
+    color: white;
+    font-weight: 500;
+    text-shadow: 0 0 1px;
+    transform: translateX(-50%); 
+    border-radius: 10px;
+    z-index: 4;
+    padding: 10px;
+}
+.success-toast {
+    background-color: rgba(26, 172, 172, 0.8);
+    box-shadow: rgba(26, 172, 172, 0.8) 0px 7px 29px 0px;
+}
 
+.error-toast {
+    background-color: rgba(199, 0, 57, 0.8);
+    box-shadow: rgba(199, 0, 57, 0.8) 0px 7px 29px 0px;
+}
+.announce{
+    background-color: #9DB2BF;
+    color: var(--txt-color);
+    text-shadow: 0 0 1px;
+    font-size: 1.3rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
 .brands{
     margin: 2rem auto;
     background-color: var(--section-color);
